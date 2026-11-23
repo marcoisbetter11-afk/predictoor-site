@@ -164,6 +164,11 @@ h2 { font-size: clamp(32px, 4vw, 48px); letter-spacing: -.01em; line-height: 1.0
 .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 28px; box-shadow: var(--shadow); position: relative; }
 .step-icon { width: 48px; height: 48px; border-radius: 14px; background: var(--soft); display: grid; place-items: center; }
 .step-icon svg { width: 24px; height: 24px; }
+.venue-icon { overflow: hidden; background: none; }
+.venue-icon img { width: 100%; height: 100%; display: block; }
+.venue-link { display: inline-flex; align-items: center; gap: 5px; color: inherit; font-weight: 600; text-decoration: none; vertical-align: bottom; }
+.venue-link:hover { text-decoration: underline; }
+.venue-link img { width: 16px; height: 16px; border-radius: 4px; }
 .step-n { position: absolute; top: 28px; right: 28px; font: 500 13px var(--mono); color: var(--muted); }
 .step h3 { font-size: 22px; letter-spacing: -.01em; margin: 22px 0 8px; font-weight: 600; }
 .step p { margin: 0; color: var(--ink-2); font-size: 15px; }

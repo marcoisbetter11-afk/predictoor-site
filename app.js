@@ -299,12 +299,16 @@
     const today = feed && feed.today;
     const claims = (feed && feed.claims) || [];
     const last = claims[0];
-    const venueOf = (v) => (v === "polymarket" ? "Polymarket" : "Kalshi");
-    const venue = venueOf(feed && feed.venue);
+    const venueOf = (v) => ({ polymarket: "Polymarket", kalshi: "Kalshi" }[v] || "predict.fun");
+    // predict.fun gets its logo and a link; the other venues are plain text.
+    const venueHtml = (v) => venueOf(v) === "predict.fun"
+      ? `<a class="venue-link" href="https://predict.fun" target="_blank" rel="noopener"><img src="img/predictfun.png" alt="" width="16" height="16">predict.fun</a>`
+      : venueOf(v);
+    const venue = venueHtml(feed && feed.venue);
     const rows = [
       ["Fees", last ? `+${Number(last.sol).toFixed(4)} SOL on ${esc(last.date.slice(5).replace("-", "/"))}` : "First claim after launch", !!last],
       ["Pick", today ? `${esc(today.selection)} · ${today.result === "pending" ? pct(today.probability) : today.result === "win" ? "Won" : today.result === "loss" ? "Lost" : "Void"}` : "Next run 09:00 UTC", !!today],
-      ["Bet", today && today.bet ? `$${Number(today.bet.usdc).toFixed(0)} on ${venueOf(today.bet.venue)}` : betting ? "Waiting for a fair price" : "Goes live once the wallet is funded", !!(today && today.bet)],
+      ["Bet", today && today.bet ? `$${Number(today.bet.usdc).toFixed(0)} on ${venueHtml(today.bet.venue)}` : betting ? "Waiting for a fair price" : "Goes live once the wallet is funded", !!(today && today.bet)],
     ];
     const when = feed && feed.generated_at
       ? new Date(feed.generated_at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
@@ -313,7 +317,7 @@
     if (betting) {
       $("status-label").textContent = "Live odds · betting on";
     } else {
-      $("step-bet").textContent = `Once the betting account is funded on ${venue}, the pick is backed there at a price no worse than the model's own estimate. Every pick is graded here either way.`;
+      $("step-bet").innerHTML = `Once the betting account is funded on ${venue}, the pick is backed there at a price no worse than the model's own estimate. Every pick is graded here either way.`;
     }
   }
 
