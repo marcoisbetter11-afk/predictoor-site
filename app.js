@@ -198,7 +198,7 @@
           </div>
         </div>
         <div class="pc-bar"><i style="width:${(pick.probability * 100).toFixed(1)}%"></i></div>
-        <div class="pc-src">Win probability from ${esc(g.odds ? g.odds.provider : "bookmaker")} odds, margin removed</div>
+        <div class="pc-src">Win probability from market odds, margin removed</div>
       </div>`;
     if (fresh) { const n = $("pc-num"); delete n.dataset.counted; countUp(n, pick.probability * 100, (v) => v.toFixed(1), 1400); }
     if (g.state === "pre") {
