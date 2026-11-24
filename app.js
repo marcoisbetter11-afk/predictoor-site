@@ -273,15 +273,33 @@
     countUp($("s-sol"), sol, (v) => `${sol ? v.toFixed(3) : "0"} SOL`);
     renderRun(feed);
 
+    // Summary: hits, misses, hit rate and how many were real trades.
+    const graded = picks.filter((p) => p.result === "win" || p.result === "loss");
+    const hits = graded.filter((p) => p.result === "win").length;
+    const trades = picks.filter((p) => p.bet).length;
+    const tile = (k, v, cls = "") => `<div class="rs"><span class="rs-k">${k}</span><span class="rs-v ${cls}">${v}</span></div>`;
+    $("rec-summary").innerHTML = picks.length ? [
+      tile("Hits", hits, hits ? "pos" : ""),
+      tile("Misses", graded.length - hits, graded.length - hits ? "neg" : ""),
+      tile("Hit rate", graded.length ? `${Math.round((100 * hits) / graded.length)}%` : "-"),
+      tile("Real trades", trades),
+    ].join("") : "";
+
+    const LABEL = { win: "✓ Hit", loss: "✗ Miss", pending: "Pending", void: "Void" };
     $("record-list").innerHTML = picks.length ? picks.map((p) => {
       const logo = p.selection_logo || (teams[p.selection] && teams[p.selection].badge);
+      const odds = Number(p.best_odds);
+      const pl = p.result === "win" ? `+${(odds - 1).toFixed(2)}u` : p.result === "loss" ? "-1.00u" : "";
+      const kind = p.bet
+        ? `<span class="rec-kind trade">Traded $${Number(p.bet.usdc).toFixed(0)}${p.bet.price ? ` @ ${Number(p.bet.price).toFixed(2)}` : ""}</span>`
+        : `<span class="rec-kind">Pick only</span>`;
       return `<div class="rec">
         <span class="rec-date">${esc(p.date.slice(5).replace("-", "/"))}</span>
         <div class="rec-game">${logo ? `<img src="${esc(logo)}" alt="" loading="lazy">` : ""}
-          <div><div class="rec-sel">${esc(p.selection)}</div>
-          <div class="rec-sub">${esc(p.home)} vs ${esc(p.away)} · ${esc(p.score || p.sport)}${p.bet ? ` · <b>$${Number(p.bet.usdc).toFixed(0)} bet</b>` : ""}</div></div></div>
-        <span class="rec-conf">${pct(p.probability)} · ${Number(p.best_odds).toFixed(2)}</span>
-        <span class="pill ${esc(p.result)}">${esc(p.result)}</span>
+          <div><div class="rec-sel">${esc(p.selection)} ${kind}</div>
+          <div class="rec-sub">${esc(p.home)} vs ${esc(p.away)} · ${esc(p.score || p.sport)}</div></div></div>
+        <span class="rec-conf">${pct(p.probability)} · ${odds.toFixed(2)}${pl ? `<small class="${p.result === "win" ? "pos" : "neg"}">${pl}</small>` : ""}</span>
+        <span class="pill ${esc(p.result)}">${LABEL[p.result] || esc(p.result)}</span>
       </div>`;
     }).join("") : `<div class="card-empty">The bot's first graded pick will appear here after its first daily run.</div>`;
 

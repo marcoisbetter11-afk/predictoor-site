@@ -183,7 +183,18 @@ h2 { font-size: clamp(32px, 4vw, 48px); letter-spacing: -.01em; line-height: 1.0
 .rec-sel { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rec-sub { font-size: 13px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .rec-conf { font: 14px var(--mono); color: var(--ink-2); text-align: right; }
-.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; text-transform: capitalize; }
+.pill { display: inline-block; font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.rec-conf small { display: block; font-size: 12px; margin-top: 2px; }
+.rec-conf .pos, .rs-v.pos { color: var(--win); }
+.rec-conf .neg, .rs-v.neg { color: var(--loss); }
+.rec-kind { display: inline-block; vertical-align: 2px; margin-left: 6px; font-size: 11px; font-weight: 600; padding: 2px 7px; border-radius: 6px; background: var(--soft); color: var(--muted); }
+.rec-kind.trade { background: #dbeafe; color: #1d4ed8; }
+.rec-summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 14px; }
+.rec-summary:empty { display: none; }
+.rs { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px; }
+.rs-k { font-size: 12px; color: var(--muted); }
+.rs-v { font: 600 22px var(--mono); }
+@media (max-width: 640px) { .rec-summary { grid-template-columns: repeat(2, 1fr); } }
 .pill.win { background: #dcfce7; color: var(--win); }
 .pill.loss { background: #fee2e2; color: var(--loss); }
 .pill.pending { background: #fef3c7; color: var(--pending); }
