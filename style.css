@@ -51,7 +51,7 @@ img { display: block; }
   -webkit-mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
           mask-image: linear-gradient(to bottom, #000 62%, transparent 98%);
   position: absolute; inset: 0; pointer-events: none;
-  background: var(--bg) url("img/banner.webp") no-repeat;
+  background: var(--bg) url("img/banner.webp?v=2") no-repeat;
   background-size: auto 100%;
   background-position: max(-40px, calc(50vw - 720px)) bottom;
   background-blend-mode: multiply;   /* the art's white turns into the page colour */
