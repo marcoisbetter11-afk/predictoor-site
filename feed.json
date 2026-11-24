@@ -1,5 +1,15 @@
 {
  "teams": {
+  "Real Madrid": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/vwvwrw1473502969.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/a5kit31731826485.jpg",
+   "color": "#ffffff"
+  },
+  "PSV Eindhoven": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/xfsz6i1721297428.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wsxvyp1426548908.jpg",
+   "color": "#e11f26"
+  },
   "Los Angeles Lakers": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/d8uoxw1714254511.png",
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/c40roe1590335658.jpg",
@@ -20,91 +30,136 @@
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/9yztgo1552921320.jpg",
    "color": "#000000"
   },
-  "Houston Rockets": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/azoktf1780729261.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wuvutr1421109286.jpg",
-   "color": "#ce1141"
+  "Boston Celtics": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/4j85bn1667936589.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/3bbiqw1549272990.jpg",
+   "color": "#007a33"
   },
-  "Minnesota Timberwolves": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/epenxg1781034811.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wuuxxs1422407729.jpg",
-   "color": "#0c2340"
+  "Real Betis": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/2oqulv1663245386.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/m4j2yl1503235901.jpg",
+   "color": "#0BB363"
   },
-  "Toronto Raptors": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/lct96a1778227205.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/tqxtqq1421602080.jpg",
-   "color": "#ce1141"
+  "Como": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/02x81t1627405841.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/enkkda1729631537.jpg",
+   "color": "#114169"
   },
-  "San Antonio Spurs": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/yc5qfx1781459158.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/xtwtxr1422128274.jpg",
-   "color": "#000000"
+  "Manchester City": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/vwpvry1467462651.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/t7rbvo1731826240.jpg",
+   "color": "#6CABDD"
   },
-  "Cleveland Cavaliers": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/pch9ct1778195828.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/rurwpy1420494697.jpg",
-   "color": "#860038"
+  "Denver Nuggets": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/s8ch7m1778197814.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/tvywtt1420850555.jpg",
+   "color": "#0e2240"
   }
  },
- "generated_at": "2026-11-23T10:11:27+00:00",
+ "generated_at": "2026-11-24T09:00:46+00:00",
  "mode": "picks",
  "betting_live": false,
  "venue": "predictfun",
  "claims_live": false,
  "today": {
-  "date": "2026-11-23",
-  "sport": "NBA",
-  "home": "Los Angeles Lakers",
-  "away": "Utah Jazz",
-  "selection": "Los Angeles Lakers",
-  "probability": 0.8531,
-  "best_odds": 1.127,
+  "date": "2026-11-24",
+  "sport": "Champions League",
+  "home": "Real Madrid",
+  "away": "PSV Eindhoven",
+  "selection": "Real Madrid",
+  "probability": 0.8445,
+  "best_odds": 1.133,
   "n_bookmakers": 1,
-  "commence_time": "2026-11-24T03:00:00Z",
+  "commence_time": "2026-11-24T20:00:00Z",
   "alternatives": [
    {
-    "selection": "Houston Rockets",
-    "game": "Houston Rockets vs LA Clippers",
-    "probability": 0.8319
+    "selection": "Boston Celtics",
+    "game": "Washington Wizards vs Boston Celtics",
+    "probability": 0.787
    },
    {
-    "selection": "Minnesota Timberwolves",
-    "game": "Minnesota Timberwolves vs Brooklyn Nets",
-    "probability": 0.827
+    "selection": "Real Betis",
+    "game": "Slovan Bratislava vs Real Betis",
+    "probability": 0.7616
    },
    {
-    "selection": "Toronto Raptors",
-    "game": "Toronto Raptors vs Milwaukee Bucks",
-    "probability": 0.799
+    "selection": "Como",
+    "game": "Como vs AEK Athens",
+    "probability": 0.7591
    },
    {
-    "selection": "San Antonio Spurs",
-    "game": "Sacramento Kings vs San Antonio Spurs",
-    "probability": 0.7961
+    "selection": "Manchester City",
+    "game": "Manchester City vs Napoli",
+    "probability": 0.74
    },
    {
-    "selection": "Cleveland Cavaliers",
-    "game": "Chicago Bulls vs Cleveland Cavaliers",
-    "probability": 0.741
+    "selection": "Denver Nuggets",
+    "game": "Denver Nuggets vs Dallas Mavericks",
+    "probability": 0.7339
    }
   ],
   "result": "pending",
   "score": null,
   "mode": "pick",
-  "sport_key": "espn:basketball/nba",
-  "espn_id": "401910044",
-  "selection_logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/lal.png",
+  "sport_key": "espn:soccer/uefa.champions",
+  "espn_id": "401915298",
+  "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
   "bet": null
  },
  "stats": {
-  "wins": 1,
+  "wins": 2,
   "losses": 0,
   "win_rate": 1.0,
-  "units": 0.17,
+  "units": 0.3,
   "sol_claimed": 0,
-  "days": 2
+  "days": 3
  },
  "picks": [
+  {
+   "date": "2026-11-24",
+   "sport": "Champions League",
+   "home": "Real Madrid",
+   "away": "PSV Eindhoven",
+   "selection": "Real Madrid",
+   "probability": 0.8445,
+   "best_odds": 1.133,
+   "n_bookmakers": 1,
+   "commence_time": "2026-11-24T20:00:00Z",
+   "alternatives": [
+    {
+     "selection": "Boston Celtics",
+     "game": "Washington Wizards vs Boston Celtics",
+     "probability": 0.787
+    },
+    {
+     "selection": "Real Betis",
+     "game": "Slovan Bratislava vs Real Betis",
+     "probability": 0.7616
+    },
+    {
+     "selection": "Como",
+     "game": "Como vs AEK Athens",
+     "probability": 0.7591
+    },
+    {
+     "selection": "Manchester City",
+     "game": "Manchester City vs Napoli",
+     "probability": 0.74
+    },
+    {
+     "selection": "Denver Nuggets",
+     "game": "Denver Nuggets vs Dallas Mavericks",
+     "probability": 0.7339
+    }
+   ],
+   "result": "pending",
+   "score": null,
+   "mode": "pick",
+   "sport_key": "espn:soccer/uefa.champions",
+   "espn_id": "401915298",
+   "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+   "bet": null
+  },
   {
    "date": "2026-11-23",
    "sport": "NBA",
@@ -142,8 +197,8 @@
      "probability": 0.741
     }
    ],
-   "result": "pending",
-   "score": null,
+   "result": "win",
+   "score": "Los Angeles Lakers 109 - 94 Utah Jazz",
    "mode": "pick",
    "sport_key": "espn:basketball/nba",
    "espn_id": "401910044",
