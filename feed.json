@@ -1,5 +1,10 @@
 {
  "teams": {
+  "RB Salzburg": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/01l4jm1781541633.png",
+   "photo": null,
+   "color": ""
+  },
   "Sabah FK": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/dug7wr1614888756.png",
    "photo": null,
@@ -40,91 +45,136 @@
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/9yztgo1552921320.jpg",
    "color": "#000000"
   },
-  "Atl\u00e9tico Madrid": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/0ulh3q1719984315.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/qwpxxy1420327141.jpg",
-   "color": "#CB3524"
+  "Juventus": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/uxf0gr1742983727.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wwtuxx1420504589.jpg",
+   "color": "#000000"
   },
-  "Houston Rockets": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/azoktf1780729261.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wuvutr1421109286.jpg",
-   "color": "#ce1141"
+  "Lyon": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/blk9771656932845.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/sxvqqq1420506345.jpg",
+   "color": "#FFF"
   },
-  "Memphis Grizzlies": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/v44qp21778197640.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/qtpvty1421857329.jpg",
-   "color": "#5d76a9"
+  "Dallas Cowboys": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/76ew3c1784718447.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/uvwrwv1471814845.jpg",
+   "color": "#002244"
   },
-  "Golden State Warriors": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/xokycb1778197905.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wwtwru1421104483.jpg",
-   "color": "#1d428a"
+  "Sunderland": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/tprtus1448813498.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/6ycf521753596865.jpg",
+   "color": "#ff0000"
   },
-  "Internazionale": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/ryhu6d1617113103.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/qzbfgw1731823483.jpg",
-   "color": "#010E80"
+  "Besiktas": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/svo05k1776827439.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/xxrvys1420411932.jpg",
+   "color": "#000000"
   }
  },
- "generated_at": "2026-11-25T09:00:23+00:00",
+ "generated_at": "2026-11-26T09:00:46+00:00",
  "mode": "picks",
  "betting_live": false,
  "venue": "predictfun",
  "claims_live": true,
  "today": {
-  "date": "2026-11-25",
-  "sport": "Champions League",
-  "home": "Sabah FK",
-  "away": "Barcelona",
-  "selection": "Barcelona",
-  "probability": 0.8811,
-  "best_odds": 1.083,
+  "date": "2026-11-26",
+  "sport": "Europa League",
+  "home": "RB Salzburg",
+  "away": "Ararat-Armenia",
+  "selection": "RB Salzburg",
+  "probability": 0.8246,
+  "best_odds": 1.154,
   "n_bookmakers": 1,
-  "commence_time": "2026-11-25T17:45:00Z",
+  "commence_time": "2026-11-26T17:45:00Z",
   "alternatives": [
    {
-    "selection": "Atl\u00e9tico Madrid",
-    "game": "Atl\u00e9tico Madrid vs Viking FK",
-    "probability": 0.8589
+    "selection": "Juventus",
+    "game": "Juventus vs Omonia Nicosia",
+    "probability": 0.8163
    },
    {
-    "selection": "Houston Rockets",
-    "game": "Houston Rockets vs Phoenix Suns",
-    "probability": 0.7707
+    "selection": "Lyon",
+    "game": "Lyon vs Lillestrom",
+    "probability": 0.785
    },
    {
-    "selection": "Memphis Grizzlies",
-    "game": "Memphis Grizzlies vs LA Clippers",
-    "probability": 0.6851
+    "selection": "Dallas Cowboys",
+    "game": "Dallas Cowboys vs Philadelphia Eagles",
+    "probability": 0.782
    },
    {
-    "selection": "Golden State Warriors",
-    "game": "Golden State Warriors vs Sacramento Kings",
-    "probability": 0.6788
+    "selection": "Sunderland",
+    "game": "Sunderland vs Jagiellonia Bialystok",
+    "probability": 0.7619
    },
    {
-    "selection": "Internazionale",
-    "game": "Internazionale vs VfB Stuttgart",
-    "probability": 0.6695
+    "selection": "Besiktas",
+    "game": "Besiktas vs Hapoel Be'er",
+    "probability": 0.7572
    }
   ],
   "result": "pending",
   "score": null,
   "mode": "pick",
-  "sport_key": "espn:soccer/uefa.champions",
-  "espn_id": "401915378",
-  "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/83.png",
+  "sport_key": "espn:soccer/uefa.europa",
+  "espn_id": "401915520",
+  "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2790.png",
   "bet": null
  },
  "stats": {
-  "wins": 3,
+  "wins": 4,
   "losses": 0,
   "win_rate": 1.0,
-  "units": 0.43,
+  "units": 0.51,
   "sol_claimed": 0.006802,
-  "days": 4
+  "days": 5
  },
  "picks": [
+  {
+   "date": "2026-11-26",
+   "sport": "Europa League",
+   "home": "RB Salzburg",
+   "away": "Ararat-Armenia",
+   "selection": "RB Salzburg",
+   "probability": 0.8246,
+   "best_odds": 1.154,
+   "n_bookmakers": 1,
+   "commence_time": "2026-11-26T17:45:00Z",
+   "alternatives": [
+    {
+     "selection": "Juventus",
+     "game": "Juventus vs Omonia Nicosia",
+     "probability": 0.8163
+    },
+    {
+     "selection": "Lyon",
+     "game": "Lyon vs Lillestrom",
+     "probability": 0.785
+    },
+    {
+     "selection": "Dallas Cowboys",
+     "game": "Dallas Cowboys vs Philadelphia Eagles",
+     "probability": 0.782
+    },
+    {
+     "selection": "Sunderland",
+     "game": "Sunderland vs Jagiellonia Bialystok",
+     "probability": 0.7619
+    },
+    {
+     "selection": "Besiktas",
+     "game": "Besiktas vs Hapoel Be'er",
+     "probability": 0.7572
+    }
+   ],
+   "result": "pending",
+   "score": null,
+   "mode": "pick",
+   "sport_key": "espn:soccer/uefa.europa",
+   "espn_id": "401915520",
+   "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2790.png",
+   "bet": null
+  },
   {
    "date": "2026-11-25",
    "sport": "Champions League",
@@ -162,8 +212,8 @@
      "probability": 0.6695
     }
    ],
-   "result": "pending",
-   "score": null,
+   "result": "win",
+   "score": "Sabah FK 1 - 4 Barcelona",
    "mode": "pick",
    "sport_key": "espn:soccer/uefa.champions",
    "espn_id": "401915378",
