@@ -3,6 +3,19 @@
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
   const pct = (p) => `${(p * 100).toFixed(1)}%`;
+  // Inline line icons (stroke = currentColor) instead of emoji / text symbols.
+  const ICON_PATHS = {
+    ext: '<path d="M7 17 17 7"/><path d="M8 7h9v9"/>',
+    check: '<path d="M20 6 9 17l-5-5"/>',
+    x: '<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+    dot: '<circle cx="12" cy="12" r="2.2" fill="currentColor" stroke="none"/>',
+    flame: '<path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.07-2.14-.22-4.05 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.15.43-2.29 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>',
+    snow: '<path d="M12 2v20"/><path d="M2 12h20"/><path d="m4.93 4.93 14.14 14.14"/><path d="m19.07 4.93-14.14 14.14"/>',
+    xlogo: '<path fill="currentColor" stroke="none" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78zm-1.08 16.18h1.7L7.4 4.73H5.58z"/>',
+    send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
+    chart: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+  };
+  const icon = (n, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[n]}</svg>`;
 
   // Leagues shown on the site (ESPN scoreboard paths). Must match bot/espn.py.
   const LEAGUES = [
@@ -55,9 +68,9 @@
       setTimeout(() => ($("ca-copy").textContent = "Copy"), 1600);
     });
   }
-  const links = [["X / Twitter", C.twitter], ["Telegram", C.telegram], ["Chart", C.dexscreener], ["pump.fun", C.pumpUrl]];
+  const links = [["X / Twitter", C.twitter, "xlogo"], ["Telegram", C.telegram, "send"], ["Chart", C.dexscreener, "chart"], ["pump.fun", C.pumpUrl, null]];
   $("socials").innerHTML = links.filter(([, u]) => u)
-    .map(([l, u]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${esc(l)} ↗</a>`).join("");
+    .map(([l, u, ic]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${ic ? icon(ic, "ic-lead") : ""}${esc(l)}${icon("ext", "ic-ext")}</a>`).join("");
   addEventListener("scroll", () => document.querySelector(".nav").classList.toggle("scrolled", scrollY > 8), { passive: true });
 
   // ---------- odds helpers ----------
@@ -286,10 +299,10 @@
     renderTrackRecord(picks, teams);
 
     const claims = (feed && feed.claims) || [];
-    const wallet = C.feeWallet ? `<li><span>Fee wallet</span><a href="https://solscan.io/account/${esc(C.feeWallet)}" target="_blank" rel="noopener">${esc(C.feeWallet.slice(0, 4))}…${esc(C.feeWallet.slice(-4))} ↗</a></li>` : "";
+    const wallet = C.feeWallet ? `<li><span>Fee wallet</span><a href="https://solscan.io/account/${esc(C.feeWallet)}" target="_blank" rel="noopener">${esc(C.feeWallet.slice(0, 4))}…${esc(C.feeWallet.slice(-4))}${icon("ext", "ic-ext")}</a></li>` : "";
     $("claims-list").innerHTML = wallet + (claims.length
       ? claims.map((c) => `<li><span>${esc(c.date)}</span><span class="sol">+${Number(c.sol).toFixed(4)} SOL</span>
-          ${c.signature ? `<a href="https://solscan.io/tx/${esc(c.signature)}" target="_blank" rel="noopener">View tx ↗</a>` : "<span></span>"}</li>`).join("")
+          ${c.signature ? `<a href="https://solscan.io/tx/${esc(c.signature)}" target="_blank" rel="noopener">View tx${icon("ext", "ic-ext")}</a>` : "<span></span>"}</li>`).join("")
       : `<li class="muted"><span>No fees claimed yet</span></li>`);
   }
 
@@ -360,12 +373,12 @@
       <div class="rp-main">
         <span class="rp-k">Hits – misses</span>
         <span class="rp-big"><span class="pos">${hits}</span><span class="rp-dash">–</span><span class="${misses ? "neg" : ""}">${misses}</span></span>
-        ${streak >= 2 ? `<span class="rp-streak ${graded[0].result}">${graded[0].result === "win" ? "🔥" : "🧊"} ${streak} ${graded[0].result === "win" ? "hits" : "misses"} in a row</span>` : ""}
+        ${streak >= 2 ? `<span class="rp-streak ${graded[0].result}">${icon(graded[0].result === "win" ? "flame" : "snow")}${streak} ${graded[0].result === "win" ? "hits" : "misses"} in a row</span>` : ""}
       </div>
       <div class="rp-form">
         <span class="rp-k">Form</span>
         <div class="form-dots">${picks.slice(0, 10).reverse().map((p) =>
-          `<span class="fd ${esc(p.result)}" title="${esc(p.date)} · ${esc(p.selection)} · ${RESULT[p.result] || ""}">${p.result === "win" ? "✓" : p.result === "loss" ? "✗" : "·"}</span>`).join("")}</div>
+          `<span class="fd ${esc(p.result)}" title="${esc(p.date)} · ${esc(p.selection)} · ${RESULT[p.result] || ""}">${icon(p.result === "win" ? "check" : p.result === "loss" ? "x" : "dot")}</span>`).join("")}</div>
         <div class="rp-mini">
           <span><b>${graded.length ? Math.round((100 * hits) / graded.length) : 0}%</b> hit rate</span>
           <span><b>${graded.length ? pct(graded.reduce((s, p) => s + p.probability, 0) / graded.length) : "-"}</b> avg confidence</span>
@@ -409,7 +422,7 @@
       return `<div class="rec2 r-${esc(p.result)}">
         <div class="r-date"><span>${esc(d.wd)}</span><b>${esc(d.dm)}</b></div>
         <div class="r-match">
-          <div class="r-league">${esc(p.sport)}${url ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">Game ↗</a>` : ""}</div>
+          <div class="r-league">${esc(p.sport)}${url ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">Game${icon("ext", "ic-ext")}</a>` : ""}</div>
           ${team(p.away, as, p)}${team(p.home, hs, p)}
         </div>
         <div class="r-odds">
@@ -418,7 +431,7 @@
           <span class="muted">odds ${Number(p.best_odds).toFixed(2)} · ${trade}</span>
         </div>
         <div class="r-res">
-          <span class="pill ${esc(p.result)}">${p.result === "win" ? "✓ " : p.result === "loss" ? "✗ " : ""}${RESULT[p.result] || esc(p.result)}</span>
+          <span class="pill ${esc(p.result)}">${p.result === "win" ? icon("check") : p.result === "loss" ? icon("x") : ""}${RESULT[p.result] || esc(p.result)}</span>
           ${u ? `<span class="r-u ${u > 0 ? "pos" : "neg"}">${fmtU(u)}</span>` : ""}
         </div>
       </div>`;
@@ -449,7 +462,7 @@
     const when = feed && feed.generated_at
       ? new Date(feed.generated_at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
     $("run-card").innerHTML = `<div class="run-head"><span>Bot's latest run</span><span class="muted">${esc(when)}</span></div>` +
-      rows.map(([k, v, done]) => `<div class="run-row"><span class="run-ic ${done ? "ok" : ""}">${done ? "✓" : "·"}</span><span class="run-k">${k}</span><span class="run-v">${v}</span></div>`).join("");
+      rows.map(([k, v, done]) => `<div class="run-row"><span class="run-ic ${done ? "ok" : ""}">${icon(done ? "check" : "dot")}</span><span class="run-k">${k}</span><span class="run-v">${v}</span></div>`).join("");
     if (betting) {
       $("status-label").textContent = "Live odds · betting on";
     } else {

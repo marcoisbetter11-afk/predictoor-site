@@ -400,3 +400,14 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .game.enter, .pick-card.enter .pc-team, .pick-card.enter .pc-sel, .pick-card.enter .pc-k, .pick-card.enter .pc-bar i { animation-name: fade !important; }
   .calm .reveal, .calm .pick-card.reveal, .calm .hb-copy > * { transform: none !important; }
 }
+
+/* ---------- inline icons ---------- */
+.ic { width: 1em; height: 1em; display: inline-block; vertical-align: -0.14em; flex: none; }
+.ic-ext { width: .85em; height: .85em; margin-left: .2em; opacity: .7; }
+.ic-lead { margin-right: .35em; }
+.socials a { display: inline-flex; align-items: center; }
+.fd .ic { width: 15px; height: 15px; }
+.run-ic .ic { width: 13px; height: 13px; }
+.pill .ic { width: 11px; height: 11px; margin-right: 4px; vertical-align: -1px; }
+.rp-streak { display: inline-flex; align-items: center; gap: 5px; }
+.rp-streak .ic { width: 14px; height: 14px; }
