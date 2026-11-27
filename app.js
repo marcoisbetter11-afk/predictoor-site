@@ -247,6 +247,19 @@
     </div>`;
   }
 
+  // Other bets still riding (e.g. a bet on a later game): one line each under the main bet.
+  function otherBets(list) {
+    if (!list || !list.length) return "";
+    return `<div class="pc-also">${list.map((o) => {
+      const vs = o.selection === o.home ? o.away : o.home;
+      const when = new Date(o.commence_time).toLocaleString(undefined, { weekday: "short", hour: "2-digit", minute: "2-digit" });
+      const pays = payoutOf(o.bet);
+      return `<div class="pc-also-row"><span class="pc-also-k">Also open</span>
+        <span class="pc-also-v"><b>${esc(o.selection)}</b> vs ${esc(vs)} · ${esc(when)}</span>
+        <span class="pc-also-m">${money(o.bet.usdc)} @ ${Number(o.bet.price).toFixed(2)}${pays ? ` · pays ${money(pays)}` : ""}</span></div>`;
+    }).join("")}</div>`;
+  }
+
   let pickTimer, shownPickId = null, lastPickKey = null;
   function renderPickCard(pick, official) {
     const el = $("pick-card");
@@ -286,6 +299,7 @@
         </div>
         <div class="pc-bar"><i style="width:${(pick.probability * 100).toFixed(1)}%"></i></div>
         ${betStrip(pick.bet)}
+        ${otherBets(pick.others)}
         <div class="pc-src">Win probability from market odds, margin removed</div>
       </div>`;
     if (fresh) { const n = $("pc-num"); delete n.dataset.counted; countUp(n, pick.probability * 100, (v) => v.toFixed(1), 1400); }
@@ -568,33 +582,51 @@
 
   // The bot's pick can be for a game on a later date than ESPN's default scoreboard shows
   // (e.g. tomorrow's La Liga match): fetch that league's scoreboard for the game's own date.
-  let officialGame = null, officialKey = null, officialAt = 0;
+  // The bot's picks/bets can be for games on a later date than ESPN's default scoreboard shows
+  // (e.g. tomorrow's La Liga match): fetch that league's scoreboard for the game's own date.
+  const extraGames = {};   // espn_id -> { game, at }
   async function loadOfficialGame(t) {
     if (!t || !t.espn_id || !t.sport_key || !t.sport_key.startsWith("espn:")) return null;
-    const key = `${t.sport_key}|${t.espn_id}`;
-    if (key === officialKey && Date.now() - officialAt < 60000) return officialGame;
+    const hit = extraGames[t.espn_id];
+    if (hit && Date.now() - hit.at < 60000) return hit.game;
     const path = t.sport_key.slice(5);
     const league = LEAGUES.find((l) => l.path === path) || { path, name: t.sport };
     const day = (t.commence_time || "").slice(0, 10).replace(/-/g, "");
+    let game = null;
     try {
       const r = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/scoreboard?dates=${day}`);
       const d = await r.json();
       const ev = (d.events || []).find((e) => String(e.id) === String(t.espn_id));
-      officialGame = ev ? parseGame(ev, league) : null;
-    } catch { officialGame = null; }
-    officialKey = key; officialAt = Date.now();
-    return officialGame;
+      game = ev ? parseGame(ev, league) : null;
+    } catch { /* keep null */ }
+    extraGames[t.espn_id] = { game, at: Date.now() };
+    return game;
   }
+  const officialList = (feed) => {
+    const seen = new Set(), out = [];
+    const bets = ((feed && feed.open_bets) || []).slice().sort((a, b) => (a.commence_time < b.commence_time ? -1 : 1));
+    for (const t of [feed && feed.today, ...bets]) {
+      if (t && t.espn_id && !seen.has(t.espn_id)) { seen.add(t.espn_id); out.push(t); }
+    }
+    return out;
+  };
+  const gameFor = (t, games) => games.find((x) => x.id === t.espn_id) || (extraGames[t.espn_id] || {}).game || null;
 
-  // Official pick from the bot if it's for an upcoming/live game we can see; else live pick.
+  // Main card: the bot's newest pick/bet whose game hasn't finished; the other open bets are
+  // listed under it. Only when none is left does the card fall back to a live pick.
   function choosePick(feed, games) {
-    const t = feed && feed.today;
-    if (t && t.espn_id) {
-      const g = games.find((x) => x.id === t.espn_id) || (officialGame && officialGame.id === t.espn_id ? officialGame : null);
-      if (g && g.state !== "post") {
-        const side = g.home.name === t.selection ? "home" : g.away.name === t.selection ? "away" : null;
-        if (side) return { pick: { game: g, side, probability: t.probability, bet: t.bet }, official: true };
-      }
+    const list = officialList(feed);
+    for (const t of list) {
+      const g = gameFor(t, games);
+      if (!g || g.state === "post") continue;
+      const side = g.home.name === t.selection ? "home" : g.away.name === t.selection ? "away" : null;
+      if (!side) continue;
+      const others = ((feed && feed.open_bets) || []).filter((b) => {
+        if (b.espn_id === t.espn_id) return false;
+        const og = gameFor(b, games);
+        return !og || og.state !== "post";   // finished games drop off (the record grades them)
+      });
+      return { pick: { game: g, side, probability: t.probability, bet: t.bet, others }, official: true };
     }
     const p = livePick(games);
     return { pick: p, official: false };
@@ -609,10 +641,10 @@
         const key = liveGrade(feed.picks || []).map((p) => p.result).join();
         if (key !== gradedKey) { gradedKey = key; renderRecord(feed); }
       }
-      if (feed && feed.today && !games.some((x) => x.id === feed.today.espn_id)) await loadOfficialGame(feed.today);
+      await Promise.all(officialList(feed).filter((t) => !games.some((x) => x.id === t.espn_id)).map(loadOfficialGame));
       const { pick, official } = choosePick(feed, games);
       lastPickId = pick ? pick.game.id : null;
-      const key = pick ? `${pick.game.id}|${pick.game.state}|${pick.game.detail}|${official}` : "none";
+      const key = pick ? `${pick.game.id}|${pick.game.state}|${pick.game.detail}|${official}|${(pick.others || []).length}` : "none";
       if (key !== lastPickKey) { lastPickKey = key; renderPickCard(pick, official); }
       countUp($("s-games"), games.length, (v) => String(Math.round(v)), 900);
       renderFilters(games);

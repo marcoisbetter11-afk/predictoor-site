@@ -66,7 +66,7 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-27T22:56:31+00:00",
+ "generated_at": "2026-11-27T22:59:09+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
@@ -111,7 +111,7 @@
   "usdt": 15.31,
   "address": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "chain": "bsc",
-  "bet_pct": 0.0
+  "bet_pct": 0.25
  },
  "airdrop": {
   "share": 0.5,
@@ -467,6 +467,44 @@
    "espn_id": "401873075",
    "selection_logo": "https://a.espncdn.com/i/teamlogos/nfl/500/scoreboard/den.png",
    "bet": null
+  }
+ ],
+ "open_bets": [
+  {
+   "selection": "Milwaukee Bucks",
+   "home": "Detroit Pistons",
+   "away": "Milwaukee Bucks",
+   "sport": "NBA",
+   "commence_time": "2026-11-28T00:30:00Z",
+   "espn_id": "401909327",
+   "bet": {
+    "usdc": 10.0,
+    "max_price": 0.22,
+    "market": 4530139,
+    "price": 0.22,
+    "shares": 45.454,
+    "venue": "predictfun"
+   },
+   "probability": 0.2131,
+   "sport_key": "espn:basketball/nba"
+  },
+  {
+   "selection": "Real Madrid",
+   "home": "Real Madrid",
+   "away": "Alav\u00e9s",
+   "sport": "La Liga",
+   "commence_time": "2026-11-28T20:00:00Z",
+   "espn_id": "401882789",
+   "bet": {
+    "usdc": 25.31,
+    "max_price": 0.88,
+    "market": 4676918,
+    "price": 0.88,
+    "shares": 28.761,
+    "venue": "predictfun"
+   },
+   "probability": 0.8511,
+   "sport_key": "espn:soccer/esp.1"
   }
  ],
  "claims": [

@@ -425,3 +425,9 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .pc-bet-k { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.65); }
 .pc-bet-v { font: 600 17px var(--mono); color: #fff; }
 .pc-bet-v small { font-size: 12px; color: var(--accent); margin-left: 2px; }
+.pc-also { margin-top: 8px; display: grid; gap: 6px; }
+.pc-also-row { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; padding: 9px 14px; border-radius: 12px;
+  background: rgba(0,0,0,.22); border: 1px solid rgba(255,255,255,.12); font-size: 13px; color: rgba(255,255,255,.8); }
+.pc-also-k { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.pc-also-v b { color: #fff; font-weight: 600; }
+.pc-also-m { margin-left: auto; font: 600 13px var(--mono); color: #fff; }
