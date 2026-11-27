@@ -59,19 +59,71 @@
   const ticker = `$${C.ticker || "COIN"}`;
   document.querySelectorAll('[data-coin="ticker-dollar"]').forEach((el) => (el.textContent = ticker));
   document.title = `${ticker}: the coin that bets on itself`;
-  ["buy-link", "buy-link-2"].forEach((id) => { if (C.pumpUrl) $(id).href = C.pumpUrl; else $(id).hidden = true; });
-  if (C.contractAddress) {
-    $("ca-box").hidden = false;
-    $("ca-text").textContent = C.contractAddress;
-    $("ca-copy").addEventListener("click", async () => {
-      try { await navigator.clipboard.writeText(C.contractAddress); $("ca-copy").textContent = "Copied"; }
-      catch { $("ca-copy").textContent = "Select & copy"; }
-      setTimeout(() => ($("ca-copy").textContent = "Copy"), 1600);
+  $("ca-copy").addEventListener("click", async () => {
+    try { await navigator.clipboard.writeText(C.contractAddress); $("ca-copy").textContent = "Copied"; }
+    catch { $("ca-copy").textContent = "Select & copy"; }
+    setTimeout(() => ($("ca-copy").textContent = "Copy"), 1600);
+  });
+  function applyCoin() {
+    ["buy-link", "buy-link-2"].forEach((id) => { if (C.pumpUrl) { $(id).href = C.pumpUrl; $(id).hidden = false; } else $(id).hidden = true; });
+    $("ca-box").hidden = !C.contractAddress;
+    $("ca-text").textContent = C.contractAddress || "";
+    const links = [["X / Twitter", C.twitter, "xlogo"], ["Telegram", C.telegram, "send"], ["Chart", C.dexscreener, "chart"], ["pump.fun", C.pumpUrl, null]];
+    $("socials").innerHTML = links.filter(([, u]) => u)
+      .map(([l, u, ic]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${ic ? icon(ic, "ic-lead") : ""}${esc(l)}${icon("ext", "ic-ext")}</a>`).join("");
+  }
+  applyCoin();
+
+  // Before the CA is in config.js: spot the launch ourselves, so the CA appears the moment
+  // the creator wallet creates the coin, without waiting for the site to be republished.
+  // (The server does the same and writes it into config.js for good.)
+  if (!C.contractAddress && C.feeWallet) {
+    const RPC = "https://solana-rpc.publicnode.com", PUMP = "6EF8rrecthR5Dkzon8Nwu78hRvfCKubJ14M5uBEwF6P";
+    const WSOL = "So11111111111111111111111111111111111111112";
+    const rpc = async (method, params) => {
+      const r = await fetch(RPC, { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method, params }) });
+      const j = await r.json();
+      if (j.error) throw new Error(j.error.message);
+      return j.result;
+    };
+    const seen = new Set();
+    let timer = 0;
+    const launchedMint = async (sig) => {
+      const tx = await rpc("getTransaction", [sig, { encoding: "jsonParsed", maxSupportedTransactionVersion: 1, commitment: "confirmed" }]);
+      if (!tx || tx.meta.err) return null;
+      const keys = tx.transaction.message.accountKeys;
+      if (keys[0].pubkey !== C.feeWallet || !keys.some((k) => k.pubkey === PUMP)) return null;
+      if (!(tx.meta.logMessages || []).some((l) => /Instruction: Create(V2)?$/.test(l))) return null;
+      const signers = new Set(keys.filter((k) => k.signer).map((k) => k.pubkey));
+      const mints = [...new Set((tx.meta.postTokenBalances || []).map((b) => b.mint).filter((m) => m !== WSOL))];
+      mints.sort((a, b) => (signers.has(b) - signers.has(a)) || (b.endsWith("pump") - a.endsWith("pump")));
+      return mints[0] || null;
+    };
+    const check = async () => {
+      if (C.contractAddress || document.hidden) return;
+      try {
+        const sigs = await rpc("getSignaturesForAddress", [C.feeWallet, { limit: 10, commitment: "confirmed" }]);
+        for (const s of sigs) {
+          if (seen.has(s.signature) || s.err) continue;
+          const mint = await launchedMint(s.signature);
+          seen.add(s.signature);
+          if (mint) {
+            Object.assign(C, { contractAddress: mint, pumpUrl: `https://pump.fun/coin/${mint}`,
+                               dexscreener: `https://dexscreener.com/solana/${mint}` });
+            applyCoin();
+            return;
+          }
+        }
+      } catch { /* try again on the next tick */ }
+      clearTimeout(timer);
+      timer = setTimeout(check, 8000);
+    };
+    check();
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && !C.contractAddress) { clearTimeout(timer); check(); }
     });
   }
-  const links = [["X / Twitter", C.twitter, "xlogo"], ["Telegram", C.telegram, "send"], ["Chart", C.dexscreener, "chart"], ["pump.fun", C.pumpUrl, null]];
-  $("socials").innerHTML = links.filter(([, u]) => u)
-    .map(([l, u, ic]) => `<a href="${esc(u)}" target="_blank" rel="noopener">${ic ? icon(ic, "ic-lead") : ""}${esc(l)}${icon("ext", "ic-ext")}</a>`).join("");
   addEventListener("scroll", () => document.querySelector(".nav").classList.toggle("scrolled", scrollY > 8), { passive: true });
 
   // ---------- odds helpers ----------
