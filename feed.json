@@ -66,7 +66,7 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-27T22:59:09+00:00",
+ "generated_at": "2026-11-27T23:07:13+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
@@ -112,6 +112,89 @@
   "address": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "chain": "bsc",
   "bet_pct": 0.25
+ },
+ "proof": {
+  "solana_wallet": "HWW6ueoe7G7J2ssXVzePL8mTQNLMD1v9UJbCATKpDUUM",
+  "bet_account": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
+  "portfolio_url": "https://predict.fun/portfolio/0x29a29dB26e7994860898a8De3E14bB43ca966f45",
+  "trail": [
+   {
+    "time": "2026-11-27T22:56:28",
+    "chain": "bsc",
+    "amount": 9.9999,
+    "unit": "USDT",
+    "url": "https://bscscan.com/tx/0x5cc8fa7b56dd7f0428805407e8dbda2a605930fba0dcf024f9c90361f93768e8",
+    "kind": "bet",
+    "text": "Bet on Milwaukee Bucks at 0.22, pays $45.45 if it wins",
+    "url2": "https://predict.fun/market/nba-mil-det-2026-11-27"
+   },
+   {
+    "time": "2026-11-27T22:44:27",
+    "chain": "bsc",
+    "amount": 25.3097,
+    "unit": "USDT",
+    "url": "https://bscscan.com/tx/0x536e23297174ae83cdc48ed45aa7a3900229a0f753d179e7511435eaee1c7345",
+    "kind": "bet",
+    "text": "Bet on Real Madrid at 0.88, pays $28.76 if it wins",
+    "url2": "https://predict.fun/market/lal-rea-ala-2026-11-28"
+   },
+   {
+    "time": "2026-11-27T22:33:22",
+    "chain": "bsc",
+    "amount": 26.703,
+    "unit": "USDT",
+    "url": "https://bscscan.com/tx/0x8b0d76a99b6abd1c831705ba35bec4e813d81783cd5e25ebb7dcc699bfd983e1",
+    "kind": "deposit",
+    "text": "USDT deposited into the betting account via deBridge"
+   },
+   {
+    "time": "2026-11-27T22:23:05",
+    "kind": "claim",
+    "chain": "solana",
+    "amount": 0.0301,
+    "unit": "SOL",
+    "text": "Creator fees claimed from pump.fun",
+    "url": "https://solscan.io/tx/zJG8xuf7nrVNonzRQ59o1ZkQwkDzKMc9kZKXnHaEZ15eaYAARq79VHgWT2t2YTLyTT713SsWE4H8F4Ezt3quY19"
+   },
+   {
+    "time": "2026-11-27T22:09:43",
+    "kind": "claim",
+    "chain": "solana",
+    "amount": 0.1735,
+    "unit": "SOL",
+    "text": "Creator fees claimed from pump.fun",
+    "url": "https://solscan.io/tx/disGSVDtWunKhBoJpbc53iHAqD3kDVAfK122NeRB87D3rEDmRzeaAiKFbj1qsaKRxgn2kHcETYdkizvQo9iSdRD"
+   },
+   {
+    "time": "2026-11-27T22:05:12",
+    "chain": "bsc",
+    "amount": 23.9129,
+    "unit": "USDT",
+    "url": "https://bscscan.com/tx/0xc888575b1887cd43c20927e3a234804caefee16feac6ce43028af3f9368d5573",
+    "kind": "deposit",
+    "text": "USDT from converted fees arrived in the betting account"
+   },
+   {
+    "time": "2026-11-27T22:05:02",
+    "kind": "convert",
+    "chain": "solana",
+    "amount": 0.3864,
+    "unit": "SOL",
+    "text": "Converted to ~23.91 USDT via deBridge",
+    "url": "https://solscan.io/tx/3eu2CThZHnzjsqbBG1aVjgap1JGKSX2GytFYg1UzDXCayaLebiaotcXNZ8WZgqtW8aWvrYnKJnEjDACSu6siqdZZ",
+    "url2": "https://app.debridge.finance/order?orderId=0x6d0c477084f15dc4fd38777e3591a1cca38f721e48f1b502d5a8d6c579082013",
+    "usdt": 23.91
+   },
+   {
+    "time": "2026-11-27T22:00:18",
+    "kind": "claim",
+    "chain": "solana",
+    "amount": 0.3972,
+    "unit": "SOL",
+    "text": "Creator fees claimed from pump.fun",
+    "url": "https://solscan.io/tx/4DBjSqkTXjZQgTgjjhfciCWBbQyBozVWPjPhpjiQsZKj3fFA2TSshfEpngCCmF5aKZ5CQX6Ae9m7dNQU7kDaVRXg"
+   }
+  ]
  },
  "airdrop": {
   "share": 0.5,

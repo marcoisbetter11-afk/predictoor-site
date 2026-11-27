@@ -14,6 +14,12 @@
     xlogo: '<path fill="currentColor" stroke="none" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78zm-1.08 16.18h1.7L7.4 4.73H5.58z"/>',
     send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
     chart: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+    coins: '<circle cx="8" cy="8" r="6"/><path d="M18.09 10.37A6 6 0 1 1 10.34 18"/><path d="M7 6h1v4"/>',
+    swap: '<path d="m16 3 4 4-4 4"/><path d="M20 7H4"/><path d="m8 21-4-4 4-4"/><path d="M4 17h16"/>',
+    down: '<path d="M12 5v14"/><path d="m19 12-7 7-7-7"/>',
+    up: '<path d="M12 19V5"/><path d="m5 12 7-7 7 7"/>',
+    target: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>',
+    trophy: '<path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v5a5 5 0 0 1-10 0z"/><path d="M17 5h3v2a3 3 0 0 1-3 3"/><path d="M7 5H4v2a3 3 0 0 0 3 3"/>',
     gift: '<path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 21V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
   };
   const icon = (n, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[n]}</svg>`;
@@ -405,15 +411,52 @@
 
     renderTrackRecord(picks, teams);
 
-    const claims = (feed && feed.claims) || [];
-    const wallet = C.feeWallet ? `<li><span>Fee wallet</span><a href="https://solscan.io/account/${esc(C.feeWallet)}" target="_blank" rel="noopener">${esc(C.feeWallet.slice(0, 4))}…${esc(C.feeWallet.slice(-4))}${icon("ext", "ic-ext")}</a></li>` : "";
-    const txLink = (sig) => sig ? `<a href="https://solscan.io/tx/${esc(sig)}" target="_blank" rel="noopener">View tx${icon("ext", "ic-ext")}</a>` : "<span></span>";
-    const rows = [
-      ...claims.map((c) => ({ date: c.date, html: `<li><span>${esc(c.date)}</span><span class="sol">+${Number(c.sol).toFixed(4)} SOL</span>${txLink(c.signature)}</li>` })),
-      ...((feed && feed.airdrops) || []).map((a) => ({ date: a.date, html: `<li class="airdrop"><span class="ad-k">${icon("gift")}${esc(a.date)} · Airdrop to ${Number(a.holders) || 0} holders</span><span class="sol">${Number(a.sol).toFixed(4)} SOL</span>${txLink(a.signature)}</li>` })),
-    ].sort((x, y) => (x.date < y.date ? 1 : -1));
-    $("claims-list").innerHTML = wallet + (rows.length ? rows.map((r) => r.html).join("")
-      : `<li class="muted"><span>No fees claimed yet</span></li>`);
+    renderProof(feed);
+  }
+
+  // ---------- on-chain proof: accounts + the full money trail ----------
+  const TRAIL = {
+    claim:    { label: "Fees claimed",   ic: "coins",  cls: "in" },
+    convert:  { label: "Converted",      ic: "swap",   cls: "" },
+    deposit:  { label: "USDT arrived",   ic: "down",   cls: "in" },
+    bet:      { label: "Bet placed",     ic: "target", cls: "out" },
+    payout:   { label: "Payout",         ic: "trophy", cls: "in" },
+    withdraw: { label: "Sent out",       ic: "up",     cls: "out" },
+    airdrop:  { label: "Airdrop",        ic: "gift",   cls: "in" },
+  };
+  const CHAIN = { solana: { name: "Solana", ex: "Solscan" }, bsc: { name: "BNB Chain", ex: "BscScan" } };
+  function renderProof(feed) {
+    const pr = (feed && feed.proof) || {};
+    const sol = pr.solana_wallet || C.feeWallet;
+    const short = (a) => `${a.slice(0, 4)}…${a.slice(-4)}`;
+    const linkCard = (k, v, sub, href) => `<a class="proof-card" href="${esc(href)}" target="_blank" rel="noopener">
+        <span class="pk">${k}</span><span class="pv">${v}${icon("ext", "ic-ext")}</span><span class="ps">${sub}</span></a>`;
+    $("proof-links").innerHTML = [
+      sol ? linkCard("Creator wallet · Solana", esc(short(sol)), "Receives the pump.fun creator fees", `https://solscan.io/account/${sol}`) : "",
+      pr.bet_account ? linkCard("Betting account · BNB Chain", esc(short(pr.bet_account)), "Every USDT in and out", `https://bscscan.com/address/${pr.bet_account}#tokentxns`) : "",
+      pr.portfolio_url ? linkCard("Live bets · predict.fun", "predictoorbot", "Open positions, P&amp;L and history", pr.portfolio_url) : "",
+    ].join("");
+
+    const trail = pr.trail || [];
+    if (!trail.length) {
+      $("claims-list").innerHTML = `<li class="muted"><span>Nothing on-chain yet</span></li>`;
+      return;
+    }
+    const when = (t) => new Date(`${t}Z`).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" });
+    $("claims-list").innerHTML = trail.map((r) => {
+      const k = TRAIL[r.kind] || { label: r.kind, ic: "dot", cls: "" };
+      const ch = CHAIN[r.chain] || { name: r.chain, ex: "Explorer" };
+      const sign = k.cls === "in" ? "+" : k.cls === "out" ? "−" : "";
+      const amt = `${sign}${Number(r.amount).toFixed(r.unit === "SOL" ? 4 : 2)} ${esc(r.unit)}`;
+      const extra = r.url2 ? `<a href="${esc(r.url2)}" target="_blank" rel="noopener">${r.kind === "convert" ? "deBridge" : "Market"}${icon("ext", "ic-ext")}</a>` : "";
+      return `<li class="tr ${k.cls}">
+        <span class="tr-ic">${icon(k.ic)}</span>
+        <span class="tr-main"><b>${k.label}</b><span class="tr-text">${esc(r.text)}</span>
+          <span class="tr-meta">${esc(when(r.time))} · <span class="tr-chain ${esc(r.chain)}">${ch.name}</span></span></span>
+        <span class="tr-amt">${amt}</span>
+        <span class="tr-links"><a href="${esc(r.url)}" target="_blank" rel="noopener">${ch.ex}${icon("ext", "ic-ext")}</a>${extra}</span>
+      </li>`;
+    }).join("");
   }
 
   // ---------- track record ----------

@@ -53,7 +53,7 @@
 
   const groups = [
     ".section-head", ".pick-card", ".stats .stat", ".run", "#filters",
-    ".steps .step", "#record-list", ".claims", ".footer-inner",
+    ".steps .step", "#record-list", ".claims", ".proof-links", ".proof-flow", ".footer-inner",
   ];
   for (const sel of groups) {
     document.querySelectorAll(sel).forEach((el, i) => {
