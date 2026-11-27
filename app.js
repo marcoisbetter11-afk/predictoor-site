@@ -252,7 +252,7 @@
           <i style="width:${o.away * 100}%;background:${esc(g.away.color)}"></i>
           ${o.draw ? `<i style="width:${o.draw * 100}%;background:#d4d4d0"></i>` : ""}
           <i style="width:${o.home * 100}%;background:${esc(g.home.color)}"></i></div>` : "";
-      const foot = o ? `<div class="g-foot"><span>${o.draw ? `Draw ${pct(o.draw)}` : "Win probability"}</span><span>${esc(o.provider)}</span></div>` : "";
+      const foot = o ? `<div class="g-foot"><span>${o.draw ? `Draw ${pct(o.draw)}` : "Win probability"}</span><span>Market odds</span></div>` : "";
       return `<article class="game ${g.id === lastPickId ? "is-pick" : ""} ${anim ? "enter" : ""}" style="--i:${Math.min(i, 12)}">
         <div class="g-top"><span class="g-league">${esc(g.league)}</span>${g.id === lastPickId ? `<span class="g-pickbadge">Today's pick</span>` : status}</div>
         ${row(g.away, "away")}${row(g.home, "home")}${bar}${foot}
@@ -264,9 +264,11 @@
     const picks = (feed && feed.picks) || [];
     const teams = (feed && feed.teams) || {};
     const s = feed && feed.stats;
-    $("s-record").textContent = s && (s.wins + s.losses) ? `${s.wins}-${s.losses}` : "0-0";
+    const graded = liveGrade(picks);
+    const wins = graded.filter((p) => p.result === "win").length, losses = graded.filter((p) => p.result === "loss").length;
+    $("s-record").textContent = `${wins}-${losses}`;
     const u = $("s-units");
-    const units = s ? Number(s.units) : 0;
+    const units = Math.round(graded.reduce((t, p) => t + unitsOf(p), 0) * 100) / 100;
     countUp(u, units, (v) => `${units > 0 ? "+" : ""}${v.toFixed(2)}u`);
     u.classList.toggle("pos", units > 0); u.classList.toggle("neg", units < 0);
     const sol = s ? Number(s.sol_claimed) : 0;
@@ -320,8 +322,23 @@
     </svg>`;
   }
 
+  // A pending pick whose game has already finished (ESPN, loaded for the games grid) is graded
+  // right away instead of waiting for the bot's next daily run.
+  function liveGrade(picks) {
+    const byId = new Map((lastGames || []).map((g) => [g.id, g]));
+    return picks.map((p) => {
+      const g = p.result === "pending" && p.espn_id && byId.get(p.espn_id);
+      if (!g || !g.completed) return p;
+      const side = g.home.name === p.selection ? g.home : g.away.name === p.selection ? g.away : null;
+      if (!side) return p;
+      return { ...p, result: side.winner ? "win" : "loss",
+               score: `${g.home.name} ${g.home.score} - ${g.away.score} ${g.away.name}` };
+    });
+  }
+
   let recFilter = "all", recShown = 10;
-  function renderTrackRecord(picks, teams) {
+  function renderTrackRecord(rawPicks, teams) {
+    const picks = liveGrade(rawPicks);
     const graded = picks.filter((p) => p.result === "win" || p.result === "loss");
     const hits = graded.filter((p) => p.result === "win").length;
     const misses = graded.length - hits;
@@ -359,7 +376,7 @@
       .map(([k, l]) => `<button type="button" class="filter ${recFilter === k ? "on" : ""}" data-f="${k}">${l} <span>${counts[k]}</span></button>`).join("") : "";
     $("rec-filters").onclick = (e) => {
       const b = e.target.closest("[data-f]");
-      if (b) { recFilter = b.dataset.f; recShown = 10; renderTrackRecord(picks, teams); }
+      if (b) { recFilter = b.dataset.f; recShown = 10; renderTrackRecord(rawPicks, teams); }
     };
 
     const list = picks.filter((p) => recFilter === "all" || p.result === recFilter);
@@ -401,13 +418,13 @@
 
     const more = $("rec-more");
     more.hidden = list.length <= recShown;
-    more.onclick = () => { recShown += 10; renderTrackRecord(picks, teams); };
+    more.onclick = () => { recShown += 10; renderTrackRecord(rawPicks, teams); };
   }
 
   // "Today's run": what the bot actually did, straight from its history.
   function renderRun(feed) {
     const betting = !!(feed && feed.betting_live);
-    const today = feed && feed.today;
+    const today = feed && feed.today && liveGrade([feed.today])[0];
     const claims = (feed && feed.claims) || [];
     const last = claims[0];
     const venueOf = (v) => ({ polymarket: "Polymarket", kalshi: "Kalshi" }[v] || "predict.fun");
@@ -446,11 +463,15 @@
     return { pick: p, official: false };
   }
 
-  let feed = null;
+  let feed = null, gradedKey = null;
   async function refresh() {
     try {
       const games = await loadGames();
       lastGames = games;
+      if (feed) {  // re-grade when a pending pick's game has finished
+        const key = liveGrade(feed.picks || []).map((p) => p.result).join();
+        if (key !== gradedKey) { gradedKey = key; renderRecord(feed); }
+      }
       const { pick, official } = choosePick(feed, games);
       lastPickId = pick ? pick.game.id : null;
       const key = pick ? `${pick.game.id}|${pick.game.state}|${pick.game.detail}|${official}` : "none";
