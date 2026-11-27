@@ -1,5 +1,15 @@
 {
  "teams": {
+  "Real Madrid": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/vwvwrw1473502969.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/a5kit31731826485.jpg",
+   "color": "#ffffff"
+  },
+  "Alav\u00e9s": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/0aaifo1734673843.png",
+   "photo": null,
+   "color": ""
+  },
   "Utah Jazz": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/trct8w1778198868.png",
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wpqtqy1423265245.jpg",
@@ -25,11 +35,6 @@
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/swqxry1424485326.jpg",
    "color": "#004d98"
   },
-  "Real Madrid": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/vwvwrw1473502969.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/a5kit31731826485.jpg",
-   "color": "#ffffff"
-  },
   "PSV Eindhoven": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/xfsz6i1721297428.png",
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wsxvyp1426548908.jpg",
@@ -50,105 +55,152 @@
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/9yztgo1552921320.jpg",
    "color": "#000000"
   },
-  "Boston Celtics": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/4j85bn1667936589.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/3bbiqw1549272990.jpg",
-   "color": "#007a33"
-  },
   "Detroit Pistons": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/lg7qrc1621594751.png",
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/yptsvt1420855346.jpg",
    "color": "#c8102e"
   },
-  "Portland Trail Blazers": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/umehtv1778226952.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/vsrrsr1422925433.jpg",
-   "color": "#e03a3e"
+  "Boston Celtics": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/4j85bn1667936589.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/3bbiqw1549272990.jpg",
+   "color": "#007a33"
   },
   "Toronto Raptors": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/lct96a1778227205.png",
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/tqxtqq1421602080.jpg",
    "color": "#ce1141"
-  },
-  "New Jersey Devils": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/z4rsvp1619536740.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/i9fxwg1556809484.jpg",
-   "color": "#CE1126"
   }
  },
- "generated_at": "2026-11-27T21:35:25+00:00",
- "mode": "picks",
- "betting_live": false,
+ "generated_at": "2026-11-27T22:44:29+00:00",
+ "mode": "live",
+ "betting_live": true,
  "venue": "predictfun",
  "claims_live": true,
  "today": {
   "date": "2026-11-27",
-  "sport": "NBA",
-  "home": "Utah Jazz",
-  "away": "Denver Nuggets",
-  "selection": "Denver Nuggets",
-  "probability": 0.7998,
-  "best_odds": 1.201,
+  "sport": "La Liga",
+  "home": "Real Madrid",
+  "away": "Alav\u00e9s",
+  "selection": "Real Madrid",
+  "probability": 0.8511,
+  "best_odds": 1.125,
   "n_bookmakers": 1,
-  "commence_time": "2026-11-28T02:30:00Z",
+  "commence_time": "2026-11-28T20:00:00Z",
   "alternatives": [
    {
-    "selection": "Boston Celtics",
-    "game": "Boston Celtics vs Atlanta Hawks",
-    "probability": 0.7771
+    "selection": "Paris Saint-Germain",
+    "game": "Paris Saint-Germain vs Lorient",
+    "probability": 0.7922
    },
    {
     "selection": "Detroit Pistons",
     "game": "Detroit Pistons vs Milwaukee Bucks",
-    "probability": 0.7668
+    "probability": 0.7869
    },
    {
-    "selection": "Portland Trail Blazers",
-    "game": "Portland Trail Blazers vs Golden State Warriors",
-    "probability": 0.7668
+    "selection": "Denver Nuggets",
+    "game": "Utah Jazz vs Denver Nuggets",
+    "probability": 0.7723
+   },
+   {
+    "selection": "Boston Celtics",
+    "game": "Boston Celtics vs Atlanta Hawks",
+    "probability": 0.7598
    },
    {
     "selection": "Toronto Raptors",
     "game": "Toronto Raptors vs Brooklyn Nets",
-    "probability": 0.7263
-   },
-   {
-    "selection": "New Jersey Devils",
-    "game": "New Jersey Devils vs Calgary Flames",
-    "probability": 0.7095
+    "probability": 0.758
    }
   ],
   "result": "pending",
   "score": null,
-  "mode": "pick",
-  "sport_key": "espn:basketball/nba",
-  "espn_id": "401909334",
-  "selection_logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/den.png",
-  "bet": null
+  "mode": "live",
+  "sport_key": "espn:soccer/esp.1",
+  "espn_id": "401882789",
+  "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+  "bet": {
+   "usdc": 25.31,
+   "max_price": 0.88,
+   "market": 4676918,
+   "price": 0.88,
+   "venue": "predictfun"
+  }
  },
  "stats": {
   "wins": 5,
   "losses": 0,
   "win_rate": 1.0,
   "units": 0.67,
-  "sol_claimed": 0,
-  "days": 6,
+  "sol_claimed": 0.600831,
+  "days": 7,
   "airdropped_sol": 0,
   "airdropped_usd": 0
  },
  "bankroll": {
-  "usdt": 0.0,
+  "usdt": 25.31,
   "address": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "chain": "bsc",
-  "bet_pct": 0.25
+  "bet_pct": 0.5
  },
  "airdrop": {
   "share": 0.5,
-  "live": false,
+  "live": true,
   "owed_usd": 0.0
  },
  "airdrops": [],
  "picks": [
+  {
+   "date": "2026-11-27",
+   "sport": "La Liga",
+   "home": "Real Madrid",
+   "away": "Alav\u00e9s",
+   "selection": "Real Madrid",
+   "probability": 0.8511,
+   "best_odds": 1.125,
+   "n_bookmakers": 1,
+   "commence_time": "2026-11-28T20:00:00Z",
+   "alternatives": [
+    {
+     "selection": "Paris Saint-Germain",
+     "game": "Paris Saint-Germain vs Lorient",
+     "probability": 0.7922
+    },
+    {
+     "selection": "Detroit Pistons",
+     "game": "Detroit Pistons vs Milwaukee Bucks",
+     "probability": 0.7869
+    },
+    {
+     "selection": "Denver Nuggets",
+     "game": "Utah Jazz vs Denver Nuggets",
+     "probability": 0.7723
+    },
+    {
+     "selection": "Boston Celtics",
+     "game": "Boston Celtics vs Atlanta Hawks",
+     "probability": 0.7598
+    },
+    {
+     "selection": "Toronto Raptors",
+     "game": "Toronto Raptors vs Brooklyn Nets",
+     "probability": 0.758
+    }
+   ],
+   "result": "pending",
+   "score": null,
+   "mode": "live",
+   "sport_key": "espn:soccer/esp.1",
+   "espn_id": "401882789",
+   "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
+   "bet": {
+    "usdc": 25.31,
+    "max_price": 0.88,
+    "market": 4676918,
+    "price": 0.88,
+    "venue": "predictfun"
+   }
+  },
   {
    "date": "2026-11-27",
    "sport": "NBA",
@@ -420,5 +472,21 @@
    "bet": null
   }
  ],
- "claims": []
+ "claims": [
+  {
+   "date": "2026-11-27",
+   "sol": 0.397203,
+   "signature": "4DBjSqkTXjZQgTgjjhfciCWBbQyBozVWPjPhpjiQsZKj3fFA2TSshfEpngCCmF5aKZ5CQX6Ae9m7dNQU7kDaVRXg"
+  },
+  {
+   "date": "2026-11-27",
+   "sol": 0.173531,
+   "signature": "disGSVDtWunKhBoJpbc53iHAqD3kDVAfK122NeRB87D3rEDmRzeaAiKFbj1qsaKRxgn2kHcETYdkizvQo9iSdRD"
+  },
+  {
+   "date": "2026-11-27",
+   "sol": 0.030097,
+   "signature": "zJG8xuf7nrVNonzRQ59o1ZkQwkDzKMc9kZKXnHaEZ15eaYAARq79VHgWT2t2YTLyTT713SsWE4H8F4Ezt3quY19"
+  }
+ ]
 }
