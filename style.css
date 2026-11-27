@@ -417,3 +417,11 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .claims .ad-k .ic { width: 14px; height: 14px; }
 .stat-sub { font-size: 12px; color: var(--muted); margin-top: -2px; }
 .stat-sub a { color: inherit; border-bottom: 1px solid var(--line); }
+
+/* ---------- the bot's real bet on the pick card ---------- */
+.pc-bet { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 16px; padding: 12px 14px; border-radius: 14px;
+  background: rgba(255,255,255,.12); border: 1px solid rgba(255,255,255,.18); backdrop-filter: blur(6px); }
+.pc-bet > div { display: flex; flex-direction: column; gap: 2px; }
+.pc-bet-k { font-size: 11px; letter-spacing: .04em; text-transform: uppercase; color: rgba(255,255,255,.65); }
+.pc-bet-v { font: 600 17px var(--mono); color: #fff; }
+.pc-bet-v small { font-size: 12px; color: var(--accent); margin-left: 2px; }

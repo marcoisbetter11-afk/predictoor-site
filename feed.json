@@ -71,7 +71,7 @@
    "color": "#ce1141"
   }
  },
- "generated_at": "2026-11-27T22:47:41+00:00",
+ "generated_at": "2026-11-27T22:51:04+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
@@ -124,6 +124,7 @@
    "max_price": 0.88,
    "market": 4676918,
    "price": 0.88,
+   "shares": 28.761,
    "venue": "predictfun"
   }
  },
@@ -198,6 +199,7 @@
     "max_price": 0.88,
     "market": 4676918,
     "price": 0.88,
+    "shares": 28.761,
     "venue": "predictfun"
    }
   },

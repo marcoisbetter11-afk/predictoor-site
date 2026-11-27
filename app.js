@@ -234,6 +234,19 @@
     return h ? `${h}h ${m}m` : `${m}m`;
   }
 
+  // What the bot really put on the pick: stake, price, and what it pays if it wins.
+  const money = (v) => `$${Number(v).toFixed(2)}`;
+  const payoutOf = (b) => (b && b.shares ? Number(b.shares) : b && b.usdc && b.price ? Number(b.usdc) / Number(b.price) : null);
+  function betStrip(b) {
+    if (!b || !b.usdc) return "";
+    const pays = payoutOf(b);
+    return `<div class="pc-bet">
+      <div><span class="pc-bet-k">Bet placed</span><span class="pc-bet-v">${money(b.usdc)}</span></div>
+      ${b.price ? `<div><span class="pc-bet-k">Price</span><span class="pc-bet-v">${Number(b.price).toFixed(2)}</span></div>` : ""}
+      ${pays ? `<div><span class="pc-bet-k">Pays if it wins</span><span class="pc-bet-v">${money(pays)} <small>+${money(pays - Number(b.usdc))}</small></span></div>` : ""}
+    </div>`;
+  }
+
   let pickTimer, shownPickId = null, lastPickKey = null;
   function renderPickCard(pick, official) {
     const el = $("pick-card");
@@ -272,6 +285,7 @@
           </div>
         </div>
         <div class="pc-bar"><i style="width:${(pick.probability * 100).toFixed(1)}%"></i></div>
+        ${betStrip(pick.bet)}
         <div class="pc-src">Win probability from market odds, margin removed</div>
       </div>`;
     if (fresh) { const n = $("pc-num"); delete n.dataset.counted; countUp(n, pick.probability * 100, (v) => v.toFixed(1), 1400); }
@@ -499,7 +513,7 @@
       const [hs, as] = m ? [m[1], m[2]] : [null, null];
       const d = fmtDay(p.date), u = unitsOf(p), url = gameUrl(p);
       const trade = p.bet
-        ? `<span class="rec-kind trade">Traded $${Number(p.bet.usdc).toFixed(0)}${p.bet.price ? ` @ ${Number(p.bet.price).toFixed(2)}` : ""}</span>`
+        ? `<span class="rec-kind trade">Bet ${money(p.bet.usdc)}${p.bet.price ? ` @ ${Number(p.bet.price).toFixed(2)}` : ""}${payoutOf(p.bet) ? ` · pays ${money(payoutOf(p.bet))}` : ""}</span>`
         : `<span class="rec-kind">Pick only</span>`;
       return `<div class="rec2 r-${esc(p.result)}">
         <div class="r-date"><span>${esc(d.wd)}</span><b>${esc(d.dm)}</b></div>
@@ -539,7 +553,7 @@
     const rows = [
       ["Fees", last ? `+${Number(last.sol).toFixed(4)} SOL on ${esc(last.date.slice(5).replace("-", "/"))}` : "First claim after launch", !!last],
       ["Pick", today ? `${esc(today.selection)} · ${today.result === "pending" ? pct(today.probability) : today.result === "win" ? "Won" : today.result === "loss" ? "Lost" : "Void"}` : "Next run 09:00 UTC", !!today],
-      ["Bet", today && today.bet ? `$${Number(today.bet.usdc).toFixed(0)} on ${venueHtml(today.bet.venue)}` : betting ? "Waiting for a fair price" : "Goes live once the wallet is funded", !!(today && today.bet)],
+      ["Bet", today && today.bet ? `${money(today.bet.usdc)} on ${venueHtml(today.bet.venue)}` : betting ? "Waiting for a fair price" : "Goes live once the wallet is funded", !!(today && today.bet)],
     ];
     const when = feed && feed.generated_at
       ? new Date(feed.generated_at).toLocaleString(undefined, { month: "short", day: "numeric", hour: "2-digit", minute: "2-digit" }) : "";
@@ -579,7 +593,7 @@
       const g = games.find((x) => x.id === t.espn_id) || (officialGame && officialGame.id === t.espn_id ? officialGame : null);
       if (g && g.state !== "post") {
         const side = g.home.name === t.selection ? "home" : g.away.name === t.selection ? "away" : null;
-        if (side) return { pick: { game: g, side, probability: t.probability }, official: true };
+        if (side) return { pick: { game: g, side, probability: t.probability, bet: t.bet }, official: true };
       }
     }
     const p = livePick(games);
