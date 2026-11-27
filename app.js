@@ -273,35 +273,7 @@
     countUp($("s-sol"), sol, (v) => `${sol ? v.toFixed(3) : "0"} SOL`);
     renderRun(feed);
 
-    // Summary: hits, misses, hit rate and how many were real trades.
-    const graded = picks.filter((p) => p.result === "win" || p.result === "loss");
-    const hits = graded.filter((p) => p.result === "win").length;
-    const trades = picks.filter((p) => p.bet).length;
-    const tile = (k, v, cls = "") => `<div class="rs"><span class="rs-k">${k}</span><span class="rs-v ${cls}">${v}</span></div>`;
-    $("rec-summary").innerHTML = picks.length ? [
-      tile("Hits", hits, hits ? "pos" : ""),
-      tile("Misses", graded.length - hits, graded.length - hits ? "neg" : ""),
-      tile("Hit rate", graded.length ? `${Math.round((100 * hits) / graded.length)}%` : "-"),
-      tile("Real trades", trades),
-    ].join("") : "";
-
-    const LABEL = { win: "✓ Hit", loss: "✗ Miss", pending: "Pending", void: "Void" };
-    $("record-list").innerHTML = picks.length ? picks.map((p) => {
-      const logo = p.selection_logo || (teams[p.selection] && teams[p.selection].badge);
-      const odds = Number(p.best_odds);
-      const pl = p.result === "win" ? `+${(odds - 1).toFixed(2)}u` : p.result === "loss" ? "-1.00u" : "";
-      const kind = p.bet
-        ? `<span class="rec-kind trade">Traded $${Number(p.bet.usdc).toFixed(0)}${p.bet.price ? ` @ ${Number(p.bet.price).toFixed(2)}` : ""}</span>`
-        : `<span class="rec-kind">Pick only</span>`;
-      return `<div class="rec">
-        <span class="rec-date">${esc(p.date.slice(5).replace("-", "/"))}</span>
-        <div class="rec-game">${logo ? `<img src="${esc(logo)}" alt="" loading="lazy">` : ""}
-          <div><div class="rec-sel">${esc(p.selection)} ${kind}</div>
-          <div class="rec-sub">${esc(p.home)} vs ${esc(p.away)} · ${esc(p.score || p.sport)}</div></div></div>
-        <span class="rec-conf">${pct(p.probability)} · ${odds.toFixed(2)}${pl ? `<small class="${p.result === "win" ? "pos" : "neg"}">${pl}</small>` : ""}</span>
-        <span class="pill ${esc(p.result)}">${LABEL[p.result] || esc(p.result)}</span>
-      </div>`;
-    }).join("") : `<div class="card-empty">The bot's first graded pick will appear here after its first daily run.</div>`;
+    renderTrackRecord(picks, teams);
 
     const claims = (feed && feed.claims) || [];
     const wallet = C.feeWallet ? `<li><span>Fee wallet</span><a href="https://solscan.io/account/${esc(C.feeWallet)}" target="_blank" rel="noopener">${esc(C.feeWallet.slice(0, 4))}…${esc(C.feeWallet.slice(-4))} ↗</a></li>` : "";
@@ -309,6 +281,127 @@
       ? claims.map((c) => `<li><span>${esc(c.date)}</span><span class="sol">+${Number(c.sol).toFixed(4)} SOL</span>
           ${c.signature ? `<a href="https://solscan.io/tx/${esc(c.signature)}" target="_blank" rel="noopener">View tx ↗</a>` : "<span></span>"}</li>`).join("")
       : `<li class="muted"><span>No fees claimed yet</span></li>`);
+  }
+
+  // ---------- track record ----------
+  const RESULT = { win: "Hit", loss: "Miss", pending: "Pending", void: "Void" };
+  const unitsOf = (p) => (p.result === "win" ? Number(p.best_odds) - 1 : p.result === "loss" ? -1 : 0);
+  const fmtU = (u) => `${u > 0 ? "+" : u < 0 ? "−" : ""}${Math.abs(u).toFixed(2)}u`;
+  const fmtDay = (d) => {
+    const dt = new Date(`${d}T12:00:00Z`);
+    return { wd: dt.toLocaleDateString(undefined, { weekday: "short", timeZone: "UTC" }),
+             dm: dt.toLocaleDateString(undefined, { day: "numeric", month: "short", timeZone: "UTC" }) };
+  };
+  const gameUrl = (p) => {
+    if (!p.espn_id || !p.sport_key) return null;
+    const path = p.sport_key.replace(/^espn:/, "");
+    const [sport, league] = path.split("/");
+    return sport === "soccer"
+      ? `https://www.espn.com/soccer/match/_/gameId/${p.espn_id}`
+      : `https://www.espn.com/${league}/game/_/gameId/${p.espn_id}`;
+  };
+
+  // Profit curve (1 unit per pick), oldest -> newest, as an inline SVG.
+  function sparkline(graded) {
+    const pts = [0];
+    graded.forEach((p) => pts.push(pts[pts.length - 1] + unitsOf(p)));
+    if (pts.length < 2) return "";
+    const W = 240, H = 64, pad = 4;
+    const lo = Math.min(0, ...pts), hi = Math.max(0, ...pts), span = hi - lo || 1;
+    const x = (i) => pad + (i * (W - 2 * pad)) / (pts.length - 1);
+    const y = (v) => H - pad - ((v - lo) * (H - 2 * pad)) / span;
+    const line = pts.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join("");
+    const up = pts[pts.length - 1] >= 0;
+    return `<svg class="spark ${up ? "up" : "down"}" viewBox="0 0 ${W} ${H}" preserveAspectRatio="none" aria-hidden="true">
+      <line x1="${pad}" x2="${W - pad}" y1="${y(0)}" y2="${y(0)}" class="spark-zero"/>
+      <path d="${line}L${x(pts.length - 1)},${y(0)}L${x(0)},${y(0)}Z" class="spark-fill"/>
+      <path d="${line}" class="spark-line"/>
+      <circle cx="${x(pts.length - 1)}" cy="${y(pts[pts.length - 1])}" r="3.5" class="spark-dot"/>
+    </svg>`;
+  }
+
+  let recFilter = "all", recShown = 10;
+  function renderTrackRecord(picks, teams) {
+    const graded = picks.filter((p) => p.result === "win" || p.result === "loss");
+    const hits = graded.filter((p) => p.result === "win").length;
+    const misses = graded.length - hits;
+    const units = graded.reduce((s, p) => s + unitsOf(p), 0);
+    const trades = picks.filter((p) => p.bet).length;
+    let streak = 0;
+    for (const p of graded) { if (p.result === graded[0].result) streak++; else break; }
+    const oldestFirst = [...graded].reverse();
+
+    $("rec-summary").innerHTML = picks.length ? `
+      <div class="rp-main">
+        <span class="rp-k">Hits – misses</span>
+        <span class="rp-big"><span class="pos">${hits}</span><span class="rp-dash">–</span><span class="${misses ? "neg" : ""}">${misses}</span></span>
+        ${streak >= 2 ? `<span class="rp-streak ${graded[0].result}">${graded[0].result === "win" ? "🔥" : "🧊"} ${streak} ${graded[0].result === "win" ? "hits" : "misses"} in a row</span>` : ""}
+      </div>
+      <div class="rp-form">
+        <span class="rp-k">Form</span>
+        <div class="form-dots">${picks.slice(0, 10).reverse().map((p) =>
+          `<span class="fd ${esc(p.result)}" title="${esc(p.date)} · ${esc(p.selection)} · ${RESULT[p.result] || ""}">${p.result === "win" ? "✓" : p.result === "loss" ? "✗" : "·"}</span>`).join("")}</div>
+        <div class="rp-mini">
+          <span><b>${graded.length ? Math.round((100 * hits) / graded.length) : 0}%</b> hit rate</span>
+          <span><b>${graded.length ? pct(graded.reduce((s, p) => s + p.probability, 0) / graded.length) : "-"}</b> avg confidence</span>
+          <span><b>${trades}</b> real trade${trades === 1 ? "" : "s"}</span>
+        </div>
+      </div>
+      <div class="rp-chart">
+        <span class="rp-k">Profit, 1 unit per pick</span>
+        <span class="rp-units ${units > 0 ? "pos" : units < 0 ? "neg" : ""}">${fmtU(units)}</span>
+        ${sparkline(oldestFirst)}
+      </div>` : "";
+
+    const counts = { all: picks.length, win: hits, loss: misses, pending: picks.filter((p) => p.result === "pending").length };
+    $("rec-filters").innerHTML = picks.length ? [["all", "All"], ["win", "Hits"], ["loss", "Misses"], ["pending", "Pending"]]
+      .filter(([k]) => k === "all" || counts[k])
+      .map(([k, l]) => `<button type="button" class="filter ${recFilter === k ? "on" : ""}" data-f="${k}">${l} <span>${counts[k]}</span></button>`).join("") : "";
+    $("rec-filters").onclick = (e) => {
+      const b = e.target.closest("[data-f]");
+      if (b) { recFilter = b.dataset.f; recShown = 10; renderTrackRecord(picks, teams); }
+    };
+
+    const list = picks.filter((p) => recFilter === "all" || p.result === recFilter);
+    const logoOf = (name, p) => (name === p.selection && p.selection_logo) || (teams[name] && teams[name].badge);
+    const team = (name, score, p) => {
+      const isPick = name === p.selection, logo = logoOf(name, p);
+      const won = p.result === "win" && isPick || p.result === "loss" && !isPick;
+      return `<div class="rt ${isPick ? "is-pick" : ""}">
+        ${logo ? `<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'rt-fb',textContent:'${esc(name.slice(0, 1))}'}))">` : `<span class="rt-fb">${esc(name.slice(0, 1))}</span>`}
+        <span class="rt-name">${esc(name)}${isPick ? `<span class="rt-tag">Pick</span>` : ""}</span>
+        <span class="rt-score ${won ? "won" : ""}">${score ?? ""}</span>
+      </div>`;
+    };
+
+    $("record-list").innerHTML = list.length ? list.slice(0, recShown).map((p) => {
+      const m = /(\d+)\s*-\s*(\d+)/.exec(p.score || "");
+      const [hs, as] = m ? [m[1], m[2]] : [null, null];
+      const d = fmtDay(p.date), u = unitsOf(p), url = gameUrl(p);
+      const trade = p.bet
+        ? `<span class="rec-kind trade">Traded $${Number(p.bet.usdc).toFixed(0)}${p.bet.price ? ` @ ${Number(p.bet.price).toFixed(2)}` : ""}</span>`
+        : `<span class="rec-kind">Pick only</span>`;
+      return `<div class="rec2 r-${esc(p.result)}">
+        <div class="r-date"><span>${esc(d.wd)}</span><b>${esc(d.dm)}</b></div>
+        <div class="r-match">
+          <div class="r-league">${esc(p.sport)}${url ? ` · <a href="${esc(url)}" target="_blank" rel="noopener">Game ↗</a>` : ""}</div>
+          ${team(p.away, as, p)}${team(p.home, hs, p)}
+        </div>
+        <div class="r-odds">
+          <div class="r-prob"><span style="width:${(p.probability * 100).toFixed(1)}%"></span></div>
+          <span>${pct(p.probability)} win chance</span>
+          <span class="muted">odds ${Number(p.best_odds).toFixed(2)} · ${trade}</span>
+        </div>
+        <div class="r-res">
+          <span class="pill ${esc(p.result)}">${p.result === "win" ? "✓ " : p.result === "loss" ? "✗ " : ""}${RESULT[p.result] || esc(p.result)}</span>
+          ${u ? `<span class="r-u ${u > 0 ? "pos" : "neg"}">${fmtU(u)}</span>` : ""}
+        </div>
+      </div>`;
+    }).join("") : `<div class="card-empty">${picks.length ? "Nothing here yet." : "The bot's first graded pick will appear here after its first daily run."}</div>`;
+
+    const more = $("rec-more");
+    more.hidden = list.length <= recShown;
+    more.onclick = () => { recShown += 10; renderTrackRecord(picks, teams); };
   }
 
   // "Today's run": what the bot actually did, straight from its history.
