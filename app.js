@@ -334,6 +334,21 @@
     }).join("");
   }
 
+  // Betting balance: USDT in the predict.fun account, read live from BNB Chain every minute.
+  const showBank = (usdt) => { if (usdt != null && isFinite(usdt)) $("s-bank").textContent = `$${Number(usdt).toFixed(2)}`; };
+  let bankAddr = null;
+  async function loadBank(addr) {
+    if (addr) bankAddr = addr;
+    if (!bankAddr) return;
+    try {
+      const r = await fetch("https://bsc-rpc.publicnode.com", { method: "POST", headers: { "content-type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", id: 1, method: "eth_call", params: [{ to: "0x55d398326f99059fF775485246999027B3197955",
+          data: "0x70a08231" + bankAddr.slice(2).toLowerCase().padStart(64, "0") }, "latest"] }) });
+      const j = await r.json();
+      if (j.result) showBank(Number(BigInt(j.result) / 10000000000000000n) / 100);   // wei -> cents -> dollars
+    } catch { /* keep the last known value */ }
+  }
+
   function renderRecord(feed) {
     const picks = (feed && feed.picks) || [];
     const teams = (feed && feed.teams) || {};
@@ -347,6 +362,17 @@
     u.classList.toggle("pos", units > 0); u.classList.toggle("neg", units < 0);
     const sol = s ? Number(s.sol_claimed) : 0;
     countUp($("s-sol"), sol, (v) => `${sol ? v.toFixed(3) : "0"} SOL`);
+    const air = s ? Number(s.airdropped_sol) || 0 : 0;
+    countUp($("s-air"), air, (v) => `${air ? v.toFixed(3) : "0"} SOL`);
+    const bank = feed && feed.bankroll;
+    if (bank) {
+      showBank(bank.usdt);
+      const pct = Math.round((Number(bank.bet_pct) || 0) * 100);
+      $("s-bank-sub").innerHTML = `${pct ? `${pct}% bet each day · ` : ""}<a href="https://bscscan.com/address/${esc(bank.address)}#tokentxns" target="_blank" rel="noopener">BscScan</a>`;
+      loadBank(bank.address);
+    } else {
+      $("s-bank").textContent = "-";
+    }
     renderRun(feed);
 
     renderTrackRecord(picks, teams);
@@ -556,6 +582,7 @@
       countUp($("s-games"), games.length, (v) => String(Math.round(v)), 900);
       renderFilters(games);
       renderGames(games);
+      loadBank();
       $("games-updated").textContent = `Updated ${new Date().toLocaleTimeString(undefined, { hour: "2-digit", minute: "2-digit" })}`;
     } catch (e) {
       $("games-grid").innerHTML = `<div class="empty">Couldn't load games. Retrying…</div>`;

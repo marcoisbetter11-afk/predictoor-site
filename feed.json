@@ -76,7 +76,7 @@
    "color": "#CE1126"
   }
  },
- "generated_at": "2026-11-27T13:13:43+00:00",
+ "generated_at": "2026-11-27T21:35:25+00:00",
  "mode": "picks",
  "betting_live": false,
  "venue": "predictfun",
@@ -135,6 +135,12 @@
   "days": 6,
   "airdropped_sol": 0,
   "airdropped_usd": 0
+ },
+ "bankroll": {
+  "usdt": 0.0,
+  "address": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
+  "chain": "bsc",
+  "bet_pct": 0.25
  },
  "airdrop": {
   "share": 0.5,

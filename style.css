@@ -415,3 +415,5 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .claims .airdrop .sol { color: var(--win); }
 .claims .ad-k { display: inline-flex; align-items: center; gap: 6px; }
 .claims .ad-k .ic { width: 14px; height: 14px; }
+.stat-sub { font-size: 12px; color: var(--muted); margin-top: -2px; }
+.stat-sub a { color: inherit; border-bottom: 1px solid var(--line); }
