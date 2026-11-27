@@ -1,5 +1,15 @@
 {
  "teams": {
+  "Utah Jazz": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/trct8w1778198868.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wpqtqy1423265245.jpg",
+   "color": "#002b5c"
+  },
+  "Denver Nuggets": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/s8ch7m1778197814.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/tvywtt1420850555.jpg",
+   "color": "#0e2240"
+  },
   "RB Salzburg": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/01l4jm1781541633.png",
    "photo": null,
@@ -30,11 +40,6 @@
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/c40roe1590335658.jpg",
    "color": "#fdb927"
   },
-  "Utah Jazz": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/trct8w1778198868.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wpqtqy1423265245.jpg",
-   "color": "#002b5c"
-  },
   "Denver Broncos": {
    "badge": "https://r2.thesportsdb.com/images/media/team/badge/zy3m9v1784718707.png",
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/582tkg1548363653.jpg",
@@ -45,91 +50,136 @@
    "photo": "https://r2.thesportsdb.com/images/media/team/fanart/9yztgo1552921320.jpg",
    "color": "#000000"
   },
-  "Juventus": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/uxf0gr1742983727.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/wwtuxx1420504589.jpg",
-   "color": "#000000"
+  "Boston Celtics": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/4j85bn1667936589.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/3bbiqw1549272990.jpg",
+   "color": "#007a33"
   },
-  "Lyon": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/blk9771656932845.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/sxvqqq1420506345.jpg",
-   "color": "#FFF"
+  "Detroit Pistons": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/lg7qrc1621594751.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/yptsvt1420855346.jpg",
+   "color": "#c8102e"
   },
-  "Dallas Cowboys": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/76ew3c1784718447.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/uvwrwv1471814845.jpg",
-   "color": "#002244"
+  "Portland Trail Blazers": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/umehtv1778226952.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/vsrrsr1422925433.jpg",
+   "color": "#e03a3e"
   },
-  "Sunderland": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/tprtus1448813498.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/6ycf521753596865.jpg",
-   "color": "#ff0000"
+  "Toronto Raptors": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/lct96a1778227205.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/tqxtqq1421602080.jpg",
+   "color": "#ce1141"
   },
-  "Besiktas": {
-   "badge": "https://r2.thesportsdb.com/images/media/team/badge/svo05k1776827439.png",
-   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/xxrvys1420411932.jpg",
-   "color": "#000000"
+  "New Jersey Devils": {
+   "badge": "https://r2.thesportsdb.com/images/media/team/badge/z4rsvp1619536740.png",
+   "photo": "https://r2.thesportsdb.com/images/media/team/fanart/i9fxwg1556809484.jpg",
+   "color": "#CE1126"
   }
  },
- "generated_at": "2026-11-27T00:42:43+00:00",
+ "generated_at": "2026-11-27T09:00:45+00:00",
  "mode": "picks",
  "betting_live": false,
  "venue": "predictfun",
  "claims_live": true,
  "today": {
-  "date": "2026-11-26",
-  "sport": "Europa League",
-  "home": "RB Salzburg",
-  "away": "Ararat-Armenia",
-  "selection": "RB Salzburg",
-  "probability": 0.8246,
-  "best_odds": 1.154,
+  "date": "2026-11-27",
+  "sport": "NBA",
+  "home": "Utah Jazz",
+  "away": "Denver Nuggets",
+  "selection": "Denver Nuggets",
+  "probability": 0.7998,
+  "best_odds": 1.201,
   "n_bookmakers": 1,
-  "commence_time": "2026-11-26T17:45:00Z",
+  "commence_time": "2026-11-28T02:30:00Z",
   "alternatives": [
    {
-    "selection": "Juventus",
-    "game": "Juventus vs Omonia Nicosia",
-    "probability": 0.8163
+    "selection": "Boston Celtics",
+    "game": "Boston Celtics vs Atlanta Hawks",
+    "probability": 0.7771
    },
    {
-    "selection": "Lyon",
-    "game": "Lyon vs Lillestrom",
-    "probability": 0.785
+    "selection": "Detroit Pistons",
+    "game": "Detroit Pistons vs Milwaukee Bucks",
+    "probability": 0.7668
    },
    {
-    "selection": "Dallas Cowboys",
-    "game": "Dallas Cowboys vs Philadelphia Eagles",
-    "probability": 0.782
+    "selection": "Portland Trail Blazers",
+    "game": "Portland Trail Blazers vs Golden State Warriors",
+    "probability": 0.7668
    },
    {
-    "selection": "Sunderland",
-    "game": "Sunderland vs Jagiellonia Bialystok",
-    "probability": 0.7619
+    "selection": "Toronto Raptors",
+    "game": "Toronto Raptors vs Brooklyn Nets",
+    "probability": 0.7263
    },
    {
-    "selection": "Besiktas",
-    "game": "Besiktas vs Hapoel Be'er",
-    "probability": 0.7572
+    "selection": "New Jersey Devils",
+    "game": "New Jersey Devils vs Calgary Flames",
+    "probability": 0.7095
    }
   ],
   "result": "pending",
   "score": null,
   "mode": "pick",
-  "sport_key": "espn:soccer/uefa.europa",
-  "espn_id": "401915520",
-  "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/2790.png",
+  "sport_key": "espn:basketball/nba",
+  "espn_id": "401909334",
+  "selection_logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/den.png",
   "bet": null
  },
  "stats": {
-  "wins": 4,
+  "wins": 5,
   "losses": 0,
   "win_rate": 1.0,
-  "units": 0.51,
+  "units": 0.67,
   "sol_claimed": 0,
-  "days": 5
+  "days": 6
  },
  "picks": [
+  {
+   "date": "2026-11-27",
+   "sport": "NBA",
+   "home": "Utah Jazz",
+   "away": "Denver Nuggets",
+   "selection": "Denver Nuggets",
+   "probability": 0.7998,
+   "best_odds": 1.201,
+   "n_bookmakers": 1,
+   "commence_time": "2026-11-28T02:30:00Z",
+   "alternatives": [
+    {
+     "selection": "Boston Celtics",
+     "game": "Boston Celtics vs Atlanta Hawks",
+     "probability": 0.7771
+    },
+    {
+     "selection": "Detroit Pistons",
+     "game": "Detroit Pistons vs Milwaukee Bucks",
+     "probability": 0.7668
+    },
+    {
+     "selection": "Portland Trail Blazers",
+     "game": "Portland Trail Blazers vs Golden State Warriors",
+     "probability": 0.7668
+    },
+    {
+     "selection": "Toronto Raptors",
+     "game": "Toronto Raptors vs Brooklyn Nets",
+     "probability": 0.7263
+    },
+    {
+     "selection": "New Jersey Devils",
+     "game": "New Jersey Devils vs Calgary Flames",
+     "probability": 0.7095
+    }
+   ],
+   "result": "pending",
+   "score": null,
+   "mode": "pick",
+   "sport_key": "espn:basketball/nba",
+   "espn_id": "401909334",
+   "selection_logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/den.png",
+   "bet": null
+  },
   {
    "date": "2026-11-26",
    "sport": "Europa League",
@@ -167,8 +217,8 @@
      "probability": 0.7572
     }
    ],
-   "result": "pending",
-   "score": null,
+   "result": "win",
+   "score": "RB Salzburg 2 - 0 Ararat-Armenia",
    "mode": "pick",
    "sport_key": "espn:soccer/uefa.europa",
    "espn_id": "401915520",
