@@ -66,7 +66,7 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-27T23:24:00+00:00",
+ "generated_at": "2026-11-27T23:25:46+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
@@ -102,7 +102,7 @@
   "losses": 0,
   "win_rate": 1.0,
   "units": 0.67,
-  "sol_claimed": 1.13585,
+  "sol_claimed": 1.358301,
   "days": 8,
   "airdropped_sol": 0,
   "airdropped_usd": 0
@@ -154,7 +154,27 @@
     "unit": "USDT",
     "url": "https://bscscan.com/tx/0x8b0d76a99b6abd1c831705ba35bec4e813d81783cd5e25ebb7dcc699bfd983e1",
     "kind": "deposit",
-    "text": "USDT deposited into the betting account via deBridge"
+    "text": "USDT from converted fees arrived in the betting account"
+   },
+   {
+    "time": "2026-11-27T22:33:13",
+    "kind": "claim",
+    "chain": "solana",
+    "amount": 0.2225,
+    "unit": "SOL",
+    "text": "Creator fees claimed from pump.fun",
+    "url": "https://solscan.io/tx/3WEbhgJpdQrMMPNboBMV2HZRpq3qbmWHmXg5xvJkWcDssgTD683cSnYEZVnqqaubw6JgEevcByvRFQykWs65eNTD"
+   },
+   {
+    "time": "2026-11-27T22:33:13",
+    "kind": "convert",
+    "chain": "solana",
+    "amount": 0.4051,
+    "unit": "SOL",
+    "text": "Converted to ~26.7 USDT via deBridge",
+    "url": "https://solscan.io/tx/sShdrU9QH53hLiNvNddtuRWvH7A9dU5zuR7NDNMaskanZPzFD6fnG6uHJrjDuZG8MyBa2nUf15tkcrD5b8PUKJr",
+    "url2": "https://app.debridge.finance/order?orderId=0xdefec6822d5fbad2093312478f0f870b6077824d67e75b465a9f67d7d61cc9e2",
+    "usdt": 26.7
    },
    {
     "time": "2026-11-27T22:23:05",
@@ -614,6 +634,11 @@
    "date": "2026-11-27",
    "sol": 0.030097,
    "signature": "zJG8xuf7nrVNonzRQ59o1ZkQwkDzKMc9kZKXnHaEZ15eaYAARq79VHgWT2t2YTLyTT713SsWE4H8F4Ezt3quY19"
+  },
+  {
+   "date": "2026-11-27",
+   "sol": 0.222451,
+   "signature": "3WEbhgJpdQrMMPNboBMV2HZRpq3qbmWHmXg5xvJkWcDssgTD683cSnYEZVnqqaubw6JgEevcByvRFQykWs65eNTD"
   },
   {
    "date": "2026-11-27",
