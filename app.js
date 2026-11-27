@@ -552,11 +552,31 @@
     }
   }
 
+  // The bot's pick can be for a game on a later date than ESPN's default scoreboard shows
+  // (e.g. tomorrow's La Liga match): fetch that league's scoreboard for the game's own date.
+  let officialGame = null, officialKey = null, officialAt = 0;
+  async function loadOfficialGame(t) {
+    if (!t || !t.espn_id || !t.sport_key || !t.sport_key.startsWith("espn:")) return null;
+    const key = `${t.sport_key}|${t.espn_id}`;
+    if (key === officialKey && Date.now() - officialAt < 60000) return officialGame;
+    const path = t.sport_key.slice(5);
+    const league = LEAGUES.find((l) => l.path === path) || { path, name: t.sport };
+    const day = (t.commence_time || "").slice(0, 10).replace(/-/g, "");
+    try {
+      const r = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${path}/scoreboard?dates=${day}`);
+      const d = await r.json();
+      const ev = (d.events || []).find((e) => String(e.id) === String(t.espn_id));
+      officialGame = ev ? parseGame(ev, league) : null;
+    } catch { officialGame = null; }
+    officialKey = key; officialAt = Date.now();
+    return officialGame;
+  }
+
   // Official pick from the bot if it's for an upcoming/live game we can see; else live pick.
   function choosePick(feed, games) {
     const t = feed && feed.today;
     if (t && t.espn_id) {
-      const g = games.find((x) => x.id === t.espn_id);
+      const g = games.find((x) => x.id === t.espn_id) || (officialGame && officialGame.id === t.espn_id ? officialGame : null);
       if (g && g.state !== "post") {
         const side = g.home.name === t.selection ? "home" : g.away.name === t.selection ? "away" : null;
         if (side) return { pick: { game: g, side, probability: t.probability }, official: true };
@@ -575,6 +595,7 @@
         const key = liveGrade(feed.picks || []).map((p) => p.result).join();
         if (key !== gradedKey) { gradedKey = key; renderRecord(feed); }
       }
+      if (feed && feed.today && !games.some((x) => x.id === feed.today.espn_id)) await loadOfficialGame(feed.today);
       const { pick, official } = choosePick(feed, games);
       lastPickId = pick ? pick.game.id : null;
       const key = pick ? `${pick.game.id}|${pick.game.state}|${pick.game.detail}|${official}` : "none";
