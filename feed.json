@@ -66,7 +66,7 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-27T23:07:13+00:00",
+ "generated_at": "2026-11-27T23:24:00+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
@@ -102,7 +102,7 @@
   "losses": 0,
   "win_rate": 1.0,
   "units": 0.67,
-  "sol_claimed": 0.600831,
+  "sol_claimed": 1.13585,
   "days": 8,
   "airdropped_sol": 0,
   "airdropped_usd": 0
@@ -118,6 +118,15 @@
   "bet_account": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "portfolio_url": "https://predict.fun/portfolio/0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "trail": [
+   {
+    "time": "2026-11-27T23:23:52",
+    "kind": "claim",
+    "chain": "solana",
+    "amount": 0.535,
+    "unit": "SOL",
+    "text": "Creator fees claimed from pump.fun",
+    "url": "https://solscan.io/tx/3hHPz6c3yGuBdeBXZWhoKEW8j8bMHFBqcEQq6UYXUgwgogXZzvX647KWMPDLuCTX9GgoXfKBapn7uXrVSoqxW4f6"
+   },
    {
     "time": "2026-11-27T22:56:28",
     "chain": "bsc",
@@ -605,6 +614,11 @@
    "date": "2026-11-27",
    "sol": 0.030097,
    "signature": "zJG8xuf7nrVNonzRQ59o1ZkQwkDzKMc9kZKXnHaEZ15eaYAARq79VHgWT2t2YTLyTT713SsWE4H8F4Ezt3quY19"
+  },
+  {
+   "date": "2026-11-27",
+   "sol": 0.535019,
+   "signature": "3hHPz6c3yGuBdeBXZWhoKEW8j8bMHFBqcEQq6UYXUgwgogXZzvX647KWMPDLuCTX9GgoXfKBapn7uXrVSoqxW4f6"
   }
  ]
 }
