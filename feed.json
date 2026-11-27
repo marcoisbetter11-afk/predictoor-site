@@ -71,7 +71,7 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-26T09:00:46+00:00",
+ "generated_at": "2026-11-27T00:42:43+00:00",
  "mode": "picks",
  "betting_live": false,
  "venue": "predictfun",
@@ -126,7 +126,7 @@
   "losses": 0,
   "win_rate": 1.0,
   "units": 0.51,
-  "sol_claimed": 0.006802,
+  "sol_claimed": 0,
   "days": 5
  },
  "picks": [
@@ -356,11 +356,5 @@
    "bet": null
   }
  ],
- "claims": [
-  {
-   "date": "2026-11-24",
-   "sol": 0.006802,
-   "signature": "vqsin7Lh6dZoFnxtva83qvd5LKhADc9j34pzQ9F8UBXN9EDAhMBMaVw664YQSGhfCPpXwusuwG7RCXFdrduj1GN"
-  }
- ]
+ "claims": []
 }
