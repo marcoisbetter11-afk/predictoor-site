@@ -14,6 +14,7 @@
     xlogo: '<path fill="currentColor" stroke="none" d="M17.75 3h3.07l-6.7 7.66L22 21h-6.17l-4.83-6.32L5.47 21H2.4l7.17-8.2L2 3h6.33l4.37 5.78zm-1.08 16.18h1.7L7.4 4.73H5.58z"/>',
     send: '<path d="m22 2-7 20-4-9-9-4z"/><path d="M22 2 11 13"/>',
     chart: '<path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/>',
+    gift: '<path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 21V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/>',
   };
   const icon = (n, cls = "") => `<svg class="ic ${cls}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${ICON_PATHS[n]}</svg>`;
 
@@ -300,9 +301,12 @@
 
     const claims = (feed && feed.claims) || [];
     const wallet = C.feeWallet ? `<li><span>Fee wallet</span><a href="https://solscan.io/account/${esc(C.feeWallet)}" target="_blank" rel="noopener">${esc(C.feeWallet.slice(0, 4))}…${esc(C.feeWallet.slice(-4))}${icon("ext", "ic-ext")}</a></li>` : "";
-    $("claims-list").innerHTML = wallet + (claims.length
-      ? claims.map((c) => `<li><span>${esc(c.date)}</span><span class="sol">+${Number(c.sol).toFixed(4)} SOL</span>
-          ${c.signature ? `<a href="https://solscan.io/tx/${esc(c.signature)}" target="_blank" rel="noopener">View tx${icon("ext", "ic-ext")}</a>` : "<span></span>"}</li>`).join("")
+    const txLink = (sig) => sig ? `<a href="https://solscan.io/tx/${esc(sig)}" target="_blank" rel="noopener">View tx${icon("ext", "ic-ext")}</a>` : "<span></span>";
+    const rows = [
+      ...claims.map((c) => ({ date: c.date, html: `<li><span>${esc(c.date)}</span><span class="sol">+${Number(c.sol).toFixed(4)} SOL</span>${txLink(c.signature)}</li>` })),
+      ...((feed && feed.airdrops) || []).map((a) => ({ date: a.date, html: `<li class="airdrop"><span class="ad-k">${icon("gift")}${esc(a.date)} · Airdrop to ${Number(a.holders) || 0} holders</span><span class="sol">${Number(a.sol).toFixed(4)} SOL</span>${txLink(a.signature)}</li>` })),
+    ].sort((x, y) => (x.date < y.date ? 1 : -1));
+    $("claims-list").innerHTML = wallet + (rows.length ? rows.map((r) => r.html).join("")
       : `<li class="muted"><span>No fees claimed yet</span></li>`);
   }
 

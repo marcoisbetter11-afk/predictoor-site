@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Comic+Neue:wght@300;400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css?v=20261127d">
+  <link rel="stylesheet" href="style.css?v=20261128">
   <link rel="icon" type="image/webp" href="img/logo-64.webp?v=2">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png?v=2">
   <link rel="canonical" href="https://predictoor.fun/">
@@ -50,6 +50,7 @@
           <p class="lede">
             Every day <span data-coin="ticker-dollar">$PREDICTOOR</span>'s creator fees are claimed on-chain, and the bot
             finds the single most confident game on the board, ranked by real bookmaker odds.
+            Half of the profit from every winning bet is airdropped back to holders.
           </p>
           <div class="hero-cta">
             <a class="btn btn-dark" id="buy-link-2" href="#" target="_blank" rel="noopener">Buy on pump.fun</a>
@@ -117,6 +118,12 @@
           <h3>Bet</h3>
           <p id="step-bet">The pick is backed on <a href="https://predict.fun" target="_blank" rel="noopener">predict.fun</a> at a price no worse than the model's own estimate.</p>
         </article>
+        <article class="step">
+          <span class="step-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v9H4v-9"/><path d="M2 7h20v5H2z"/><path d="M12 21V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg></span>
+          <span class="step-n">04</span>
+          <h3>Share</h3>
+          <p>When a bet wins, <strong>50% of its profit</strong> is airdropped to <span data-coin="ticker-dollar">$PREDICTOOR</span> holders in SOL, split by how much each wallet holds. Losing bets pay nothing. Every airdrop is public on Solscan.</p>
+        </article>
       </div>
     </section>
 
@@ -133,7 +140,7 @@
 
     <section id="claims" class="wrap section">
       <div class="section-head">
-        <div><p class="kicker">On-chain</p><h2>Fee claims</h2></div>
+        <div><p class="kicker">On-chain</p><h2>Fee claims &amp; airdrops</h2></div>
       </div>
       <ul class="card claims" id="claims-list"></ul>
     </section>
@@ -142,7 +149,8 @@
   <footer class="footer">
     <div class="wrap footer-inner">
       <a class="brand" href="#"><img class="brand-mark" src="img/logo-64.webp?v=2" alt="" width="32" height="32"><span data-coin="ticker-dollar">$PREDICTOOR</span></a>
-      <p>Picks are probabilities, not promises. Favourites lose all the time. Nothing here is financial advice,
+      <p>Picks are probabilities, not promises. Favourites lose all the time, and airdrops only happen when a bet wins.
+        Pool and bonding-curve wallets are left out, and holders whose share would be under 0.001 SOL are skipped. Nothing here is financial advice,
         memecoins can go to zero, and sports betting may be restricted where you live.</p>
       <p class="muted small">Games &amp; scores: ESPN · Fees: pump.fun via PumpPortal · Bets: <a href="https://predict.fun" target="_blank" rel="noopener">predict.fun</a><br>Not affiliated with or endorsed by ESPN.</p>
     </div>
@@ -150,6 +158,6 @@
 
   <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script>
   <script src="motion.js"></script>
-  <script src="app.js?v=20261127d"></script>
+  <script src="app.js?v=20261128"></script>
 </body>
 </html>

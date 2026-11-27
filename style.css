@@ -160,7 +160,8 @@ h2 { font-size: clamp(32px, 4vw, 48px); letter-spacing: -.01em; line-height: 1.0
 .empty { grid-column: 1 / -1; background: var(--surface); border: 1px dashed #dcdcd6; border-radius: var(--r); padding: 40px 24px; text-align: center; color: var(--ink-2); }
 
 /* ---------- steps ---------- */
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+@media (max-width: 1100px) { .steps { grid-template-columns: repeat(2, 1fr); } }
 .step { background: var(--surface); border: 1px solid var(--line); border-radius: var(--r); padding: 28px; box-shadow: var(--shadow); position: relative; }
 .step-icon { width: 48px; height: 48px; border-radius: 14px; background: var(--soft); display: grid; place-items: center; }
 .step-icon svg { width: 24px; height: 24px; }
@@ -411,3 +412,6 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .pill .ic { width: 11px; height: 11px; margin-right: 4px; vertical-align: -1px; }
 .rp-streak { display: inline-flex; align-items: center; gap: 5px; }
 .rp-streak .ic { width: 14px; height: 14px; }
+.claims .airdrop .sol { color: var(--win); }
+.claims .ad-k { display: inline-flex; align-items: center; gap: 6px; }
+.claims .ad-k .ic { width: 14px; height: 14px; }

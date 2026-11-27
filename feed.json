@@ -76,7 +76,7 @@
    "color": "#CE1126"
   }
  },
- "generated_at": "2026-11-27T09:00:45+00:00",
+ "generated_at": "2026-11-27T13:13:43+00:00",
  "mode": "picks",
  "betting_live": false,
  "venue": "predictfun",
@@ -132,8 +132,16 @@
   "win_rate": 1.0,
   "units": 0.67,
   "sol_claimed": 0,
-  "days": 6
+  "days": 6,
+  "airdropped_sol": 0,
+  "airdropped_usd": 0
  },
+ "airdrop": {
+  "share": 0.5,
+  "live": false,
+  "owed_usd": 0.0
+ },
+ "airdrops": [],
  "picks": [
   {
    "date": "2026-11-27",
