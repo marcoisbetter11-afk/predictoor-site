@@ -66,7 +66,7 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-27T23:25:46+00:00",
+ "generated_at": "2026-11-27T23:28:46+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
@@ -102,13 +102,13 @@
   "losses": 0,
   "win_rate": 1.0,
   "units": 0.67,
-  "sol_claimed": 1.358301,
+  "sol_claimed": 1.359535,
   "days": 8,
   "airdropped_sol": 0,
   "airdropped_usd": 0
  },
  "bankroll": {
-  "usdt": 15.31,
+  "usdt": 51.28,
   "address": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "chain": "bsc",
   "bet_pct": 0.25
@@ -118,6 +118,35 @@
   "bet_account": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "portfolio_url": "https://predict.fun/portfolio/0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "trail": [
+   {
+    "time": "2026-11-27T23:28:35",
+    "chain": "bsc",
+    "amount": 35.9778,
+    "unit": "USDT",
+    "url": "https://bscscan.com/tx/0xace2022f590b5325b84c7307a7406f1a46f1d0869ec9ed16e8257f0e5dba47c6",
+    "kind": "deposit",
+    "text": "USDT from converted fees arrived in the betting account"
+   },
+   {
+    "time": "2026-11-27T23:28:25",
+    "kind": "claim",
+    "chain": "solana",
+    "amount": 0.0012,
+    "unit": "SOL",
+    "text": "Creator fees claimed from pump.fun",
+    "url": "https://solscan.io/tx/3BVqevE8eq2vfZ31eZL49THh2QhoX5jT1Y44MryZdPUxUzHTq1Mo4LPFGxNmbhgtYf8V5mwpd82kssK8MComU3hw"
+   },
+   {
+    "time": "2026-11-27T23:28:25",
+    "kind": "convert",
+    "chain": "solana",
+    "amount": 0.5573,
+    "unit": "SOL",
+    "text": "Converted to ~35.98 USDT via deBridge",
+    "url": "https://solscan.io/tx/5v4zu8n8a1f5PEmkfGuNbvAcfdsPrhgmdDx7Nb7rytkAWeTpRdfioYaLYyfTBWT9ZWJzRPLXYdfmdfDDJicoAu8s",
+    "url2": "https://app.debridge.finance/order?orderId=0x7e17b70bff79a8496801ea4aaf8b35e6137b5af28562ac37d0fc65641c57a1e9",
+    "usdt": 35.98
+   },
    {
     "time": "2026-11-27T23:23:52",
     "kind": "claim",
@@ -644,6 +673,11 @@
    "date": "2026-11-27",
    "sol": 0.535019,
    "signature": "3hHPz6c3yGuBdeBXZWhoKEW8j8bMHFBqcEQq6UYXUgwgogXZzvX647KWMPDLuCTX9GgoXfKBapn7uXrVSoqxW4f6"
+  },
+  {
+   "date": "2026-11-27",
+   "sol": 0.001234,
+   "signature": "3BVqevE8eq2vfZ31eZL49THh2QhoX5jT1Y44MryZdPUxUzHTq1Mo4LPFGxNmbhgtYf8V5mwpd82kssK8MComU3hw"
   }
  ]
 }
