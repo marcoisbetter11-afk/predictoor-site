@@ -2,10 +2,10 @@
 window.COIN = {
   name: "Predictoor",
   ticker: "PREDICTOOR",
-  contractAddress: "",          // pump.fun mint address, e.g. "7xK...pump"
-  pumpUrl: "",                  // https://pump.fun/coin/<mint>
+  contractAddress: "CmUR8j95PEHFSi5LGv9CDkgjdqaQZwbU8rjgv3h7pump",
+  pumpUrl: "https://pump.fun/coin/CmUR8j95PEHFSi5LGv9CDkgjdqaQZwbU8rjgv3h7pump",
   twitter: "https://x.com/predictoorfun",
   telegram: "",                 // https://t.me/...
-  dexscreener: "",              // https://dexscreener.com/solana/<pair>
-  feeWallet: "HWW6ueoe7G7J2ssXVzePL8mTQNLMD1v9UJbCATKpDUUM",  // creator wallet that receives the fees
+  dexscreener: "https://dexscreener.com/solana/CmUR8j95PEHFSi5LGv9CDkgjdqaQZwbU8rjgv3h7pump",
+  feeWallet: "HWW6ueoe7G7J2ssXVzePL8mTQNLMD1v9UJbCATKpDUUM",
 };
