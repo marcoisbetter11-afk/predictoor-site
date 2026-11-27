@@ -150,8 +150,16 @@
   }
 
   // ---------- rendering ----------
+  // Ask the image hosts for a small copy instead of the full 500px logo.
+  const sized = (u, px) => {
+    if (!u) return u;
+    const m = u.match(/^https:\/\/a\.espncdn\.com(\/i\/[^?]+\.png)$/);
+    if (m) return `https://a.espncdn.com/combiner/i?img=${m[1]}&w=${px}&h=${px}`;
+    if (/thesportsdb\.com\/images\/.+\.(png|jpe?g)$/.test(u)) return u + (px <= 64 ? "/tiny" : "/small");
+    return u;
+  };
   const logoImg = (t, cls) => t.logo
-    ? `<img class="${cls}" src="${esc(t.logo)}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
+    ? `<img class="${cls}" src="${esc(sized(t.logo, 80))}" alt="" loading="lazy" onerror="this.style.visibility='hidden'">`
     : `<span class="${cls}-fb g-logo-fb" style="background:${esc(t.color)}">${esc((t.abbr || t.name).slice(0, 3))}</span>`;
 
   function countdown(ms) {
@@ -385,7 +393,7 @@
       const isPick = name === p.selection, logo = logoOf(name, p);
       const won = p.result === "win" && isPick || p.result === "loss" && !isPick;
       return `<div class="rt ${isPick ? "is-pick" : ""}">
-        ${logo ? `<img src="${esc(logo)}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'rt-fb',textContent:'${esc(name.slice(0, 1))}'}))">` : `<span class="rt-fb">${esc(name.slice(0, 1))}</span>`}
+        ${logo ? `<img src="${esc(sized(logo, 64))}" alt="" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'rt-fb',textContent:'${esc(name.slice(0, 1))}'}))">` : `<span class="rt-fb">${esc(name.slice(0, 1))}</span>`}
         <span class="rt-name">${esc(name)}${isPick ? `<span class="rt-tag">Pick</span>` : ""}</span>
         <span class="rt-score ${won ? "won" : ""}">${score ?? ""}</span>
       </div>`;
@@ -489,6 +497,11 @@
     feed = await loadFeed();
     renderRecord(feed);
     await refresh();
-    setInterval(refresh, 60000);
+    setInterval(() => { if (!document.hidden) refresh(); }, 60000);
+    let hiddenAt = 0;  // catch up straight away when a background tab comes back
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) hiddenAt = Date.now();
+      else if (hiddenAt && Date.now() - hiddenAt > 60000) refresh();
+    });
   })();
 })();
