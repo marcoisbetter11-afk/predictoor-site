@@ -66,34 +66,60 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-27T23:28:46+00:00",
+ "generated_at": "2026-11-28T01:43:54+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
  "claims_live": true,
  "today": {
   "date": "2026-11-27",
-  "sport": "NBA",
-  "home": "Detroit Pistons",
-  "away": "Milwaukee Bucks",
-  "selection": "Milwaukee Bucks",
-  "probability": 0.2131,
-  "best_odds": 4.51,
+  "sport": "La Liga",
+  "home": "Real Madrid",
+  "away": "Alav\u00e9s",
+  "selection": "Real Madrid",
+  "probability": 0.8511,
+  "best_odds": 1.125,
   "n_bookmakers": 1,
-  "commence_time": "2026-11-28T00:30:00Z",
-  "alternatives": [],
+  "commence_time": "2026-11-28T20:00:00Z",
+  "alternatives": [
+   {
+    "selection": "Paris Saint-Germain",
+    "game": "Paris Saint-Germain vs Lorient",
+    "probability": 0.7922
+   },
+   {
+    "selection": "Detroit Pistons",
+    "game": "Detroit Pistons vs Milwaukee Bucks",
+    "probability": 0.7869
+   },
+   {
+    "selection": "Denver Nuggets",
+    "game": "Utah Jazz vs Denver Nuggets",
+    "probability": 0.7723
+   },
+   {
+    "selection": "Boston Celtics",
+    "game": "Boston Celtics vs Atlanta Hawks",
+    "probability": 0.7598
+   },
+   {
+    "selection": "Toronto Raptors",
+    "game": "Toronto Raptors vs Brooklyn Nets",
+    "probability": 0.758
+   }
+  ],
   "result": "pending",
   "score": null,
   "mode": "live",
-  "sport_key": "espn:basketball/nba",
-  "espn_id": "401909327",
-  "selection_logo": "https://a.espncdn.com/i/teamlogos/nba/500/scoreboard/mil.png",
+  "sport_key": "espn:soccer/esp.1",
+  "espn_id": "401882789",
+  "selection_logo": "https://a.espncdn.com/i/teamlogos/soccer/500/86.png",
   "bet": {
-   "usdc": 10.0,
-   "max_price": 0.22,
-   "market": 4530139,
-   "price": 0.22,
-   "shares": 45.454,
+   "usdc": 25.31,
+   "max_price": 0.88,
+   "market": 4676918,
+   "price": 0.88,
+   "shares": 28.761,
    "venue": "predictfun"
   }
  },
@@ -102,13 +128,13 @@
   "losses": 0,
   "win_rate": 1.0,
   "units": 0.67,
-  "sol_claimed": 1.359535,
+  "sol_claimed": 1.754057,
   "days": 8,
   "airdropped_sol": 0,
   "airdropped_usd": 0
  },
  "bankroll": {
-  "usdt": 51.28,
+  "usdt": 75.9,
   "address": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "chain": "bsc",
   "bet_pct": 0.25
@@ -118,6 +144,35 @@
   "bet_account": "0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "portfolio_url": "https://predict.fun/portfolio/0x29a29dB26e7994860898a8De3E14bB43ca966f45",
   "trail": [
+   {
+    "time": "2026-11-28T01:43:43",
+    "chain": "bsc",
+    "amount": 24.6133,
+    "unit": "USDT",
+    "url": "https://bscscan.com/tx/0x40f310ee7730601a15796e049b4a18efea5aed6105f9ce1b3deb4c446b540089",
+    "kind": "deposit",
+    "text": "USDT from converted fees arrived in the betting account"
+   },
+   {
+    "time": "2026-11-28T01:43:30",
+    "kind": "claim",
+    "chain": "solana",
+    "amount": 0.3945,
+    "unit": "SOL",
+    "text": "Creator fees claimed from pump.fun",
+    "url": "https://solscan.io/tx/3MdX9iJv4umFBzJsFN5trJx2QiEihZPoAtnF9981o82ymBSvZAtGVD5ifZ1C38rska2AkM8doqBxQzauHX2CkcWA"
+   },
+   {
+    "time": "2026-11-28T01:43:30",
+    "kind": "convert",
+    "chain": "solana",
+    "amount": 0.3945,
+    "unit": "SOL",
+    "text": "Converted to ~24.61 USDT via deBridge",
+    "url": "https://solscan.io/tx/5R1WgnUFup3hEMrMz6NDumXNuyW4oDxQwF3dn7XUFtZp7DUjdmoGCmgksuX2S3goDFprPsa96JyKMdabPHNsDEvP",
+    "url2": "https://app.debridge.finance/order?orderId=0xbbc1953128ac6101eca0cedd4cd754f58e60946d153d3b769810a0cc448f7ae9",
+    "usdt": 24.61
+   },
    {
     "time": "2026-11-27T23:28:35",
     "chain": "bsc",
@@ -649,6 +704,11 @@
   }
  ],
  "claims": [
+  {
+   "date": "2026-11-28",
+   "sol": 0.394522,
+   "signature": "3MdX9iJv4umFBzJsFN5trJx2QiEihZPoAtnF9981o82ymBSvZAtGVD5ifZ1C38rska2AkM8doqBxQzauHX2CkcWA"
+  },
   {
    "date": "2026-11-27",
    "sol": 0.397203,
