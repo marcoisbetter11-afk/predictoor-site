@@ -470,3 +470,17 @@ a, button { -webkit-tap-highlight-color: transparent; }
   .tr-amt { grid-area: amt; }
   .tr-links { grid-area: links; flex-direction: row; justify-content: flex-end; gap: 14px; }
 }
+
+/* ---------- live score on the pick card ---------- */
+.pc-score { display: flex; flex-direction: column; align-items: center; gap: 8px; min-width: 120px; }
+.pc-nums { display: flex; align-items: baseline; gap: 10px; font: 700 46px var(--mono); line-height: 1; color: rgba(255,255,255,.75); }
+.pc-nums b { font-weight: 700; }
+.pc-nums b.mine { color: #fff; text-shadow: 0 0 18px rgba(255,255,255,.35); }
+.pc-nums i { font-style: normal; font-size: 28px; color: rgba(255,255,255,.5); }
+.pc-clock { display: inline-flex; align-items: center; gap: 6px; font: 600 12px var(--mono); letter-spacing: .03em; color: rgba(255,255,255,.85);
+  background: rgba(0,0,0,.28); padding: 4px 10px; border-radius: 999px; white-space: nowrap; }
+.pc-st.up { color: #4ade80; }
+.pc-st.down { color: #f87171; }
+.pc-bet.is-live { border-color: rgba(255,255,255,.32); }
+.pc-also-live { font: 600 13px var(--mono); color: #fff; }
+@media (max-width: 640px) { .pc-nums { font-size: 34px; } .pc-score { min-width: 90px; } }

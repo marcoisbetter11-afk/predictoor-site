@@ -243,11 +243,23 @@
   // What the bot really put on the pick: stake, price, and what it pays if it wins.
   const money = (v) => `$${Number(v).toFixed(2)}`;
   const payoutOf = (b) => (b && b.shares ? Number(b.shares) : b && b.usdc && b.price ? Number(b.usdc) / Number(b.price) : null);
-  function betStrip(b) {
+  // Where a bet stands on the scoreboard: the picked side's margin while live, the result after.
+  function standing(g, side) {
+    if (!g || g.state === "pre") return null;
+    const me = Number(g[side].score), them = Number(g[side === "home" ? "away" : "home"].score);
+    if (!isFinite(me) || !isFinite(them)) return null;
+    if (g.state === "post") return me > them ? { cls: "up", text: "Won" } : me < them ? { cls: "down", text: "Lost" } : { cls: "", text: "Draw" };
+    const d = me - them;
+    return d > 0 ? { cls: "up", text: `Up ${d}` } : d < 0 ? { cls: "down", text: `Down ${-d}` } : { cls: "", text: "Tied" };
+  }
+  function betStrip(b, g, side) {
     if (!b || !b.usdc) return "";
     const pays = payoutOf(b);
-    return `<div class="pc-bet">
-      <div><span class="pc-bet-k">Bet placed</span><span class="pc-bet-v">${money(b.usdc)}</span></div>
+    const live = g && g.state !== "pre";
+    const st = standing(g, side);
+    return `<div class="pc-bet ${live ? "is-live" : ""}">
+      <div><span class="pc-bet-k">${live ? "In with" : "Bet placed"}</span><span class="pc-bet-v">${money(b.usdc)}</span></div>
+      ${st ? `<div><span class="pc-bet-k">Right now</span><span class="pc-bet-v pc-st ${st.cls}">${st.text}</span></div>` : ""}
       ${b.price ? `<div><span class="pc-bet-k">Price</span><span class="pc-bet-v">${Number(b.price).toFixed(2)}</span></div>` : ""}
       ${pays ? `<div><span class="pc-bet-k">Pays if it wins</span><span class="pc-bet-v">${money(pays)} <small>+${money(pays - Number(b.usdc))}</small></span></div>` : ""}
     </div>`;
@@ -260,8 +272,13 @@
       const vs = o.selection === o.home ? o.away : o.home;
       const when = new Date(o.commence_time).toLocaleString(undefined, { weekday: "short", hour: "2-digit", minute: "2-digit" });
       const pays = payoutOf(o.bet);
+      const og = gameFor(o, lastGames);
+      const oside = og ? (og.home.name === o.selection ? "home" : og.away.name === o.selection ? "away" : null) : null;
+      const live = og && oside && og.state !== "pre"
+        ? `<span class="pc-also-live">${og.state === "in" ? "LIVE " : ""}${esc(og[oside].score)}–${esc(og[oside === "home" ? "away" : "home"].score)}</span> · ${esc(og.detail)}`
+        : esc(when);
       return `<div class="pc-also-row"><span class="pc-also-k">Also open</span>
-        <span class="pc-also-v"><b>${esc(o.selection)}</b> vs ${esc(vs)} · ${esc(when)}</span>
+        <span class="pc-also-v"><b>${esc(o.selection)}</b> vs ${esc(vs)} · ${live}</span>
         <span class="pc-also-m">${money(o.bet.usdc)} @ ${Number(o.bet.price).toFixed(2)}${pays ? ` · pays ${money(pays)}` : ""}</span></div>`;
     }).join("")}</div>`;
   }
@@ -290,9 +307,13 @@
       ${sel.logo ? `<img class="pc-ghost" src="${esc(sel.logo)}" alt="">` : ""}
       <div class="pc-top">
         <span class="glass">${esc(g.league)}</span>
-        <span class="glass" id="pc-kick">${g.state === "pre" ? "Starts in " + countdown(g.start - Date.now()) : esc(g.detail)}</span>
+        <span class="glass" id="pc-kick">${g.state === "pre" ? "Starts in " + countdown(g.start - Date.now()) : g.state === "in" ? "Live now" : "Final"}</span>
       </div>
-      <div class="pc-match">${teamHtml(g.away, "away")}<span class="pc-vs">@</span>${teamHtml(g.home, "home")}</div>
+      <div class="pc-match">${teamHtml(g.away, "away")}${g.state === "pre" ? `<span class="pc-vs">@</span>` : `
+        <div class="pc-score ${g.state === "in" ? "is-live" : ""}">
+          <div class="pc-nums"><b class="${pick.side === "away" ? "mine" : ""}">${esc(g.away.score)}</b><i>–</i><b class="${pick.side === "home" ? "mine" : ""}">${esc(g.home.score)}</b></div>
+          <span class="pc-clock">${g.state === "in" ? `<span class="dot live"></span>LIVE · ` : ""}${esc(g.detail)}</span>
+        </div>`}${teamHtml(g.home, "home")}</div>
       <div class="pc-bottom">
         <span class="pc-k">${official ? "Today's pick" : "Live pick · from current odds"}</span>
         <span class="pc-sel">${esc(sel.name)} to win</span>
@@ -304,7 +325,7 @@
           </div>
         </div>
         <div class="pc-bar"><i style="width:${(pick.probability * 100).toFixed(1)}%"></i></div>
-        ${betStrip(pick.bet)}
+        ${betStrip(pick.bet, g, pick.side)}
         ${otherBets(pick.others)}
         <div class="pc-src">Win probability from market odds, margin removed</div>
       </div>`;
@@ -658,7 +679,9 @@
   // Main card: the bot's newest pick/bet whose game hasn't finished; the other open bets are
   // listed under it. Only when none is left does the card fall back to a live pick.
   function choosePick(feed, games) {
-    const list = officialList(feed);
+    // A bet whose game is live right now always takes the main card.
+    const list = officialList(feed).sort((a, b) =>
+      (((gameFor(b, games) || {}).state === "in") - ((gameFor(a, games) || {}).state === "in")));
     for (const t of list) {
       const g = gameFor(t, games);
       if (!g || g.state === "post") continue;
@@ -675,7 +698,7 @@
     return { pick: p, official: false };
   }
 
-  let feed = null, gradedKey = null;
+  let feed = null, gradedKey = null, liveBet = false;
   async function refresh() {
     try {
       const games = await loadGames();
@@ -687,7 +710,10 @@
       await Promise.all(officialList(feed).filter((t) => !games.some((x) => x.id === t.espn_id)).map(loadOfficialGame));
       const { pick, official } = choosePick(feed, games);
       lastPickId = pick ? pick.game.id : null;
-      const key = pick ? `${pick.game.id}|${pick.game.state}|${pick.game.detail}|${official}|${(pick.others || []).length}` : "none";
+      const others = (pick && pick.others) || [];
+      const scoreKey = (g) => (g ? `${g.state}|${g.detail}|${g.home.score}|${g.away.score}` : "");
+      const key = pick ? `${pick.game.id}|${scoreKey(pick.game)}|${official}|${others.length}|${others.map((o) => scoreKey(gameFor(o, games))).join(",")}` : "none";
+      liveBet = !!(pick && (pick.game.state === "in" || others.some((o) => (gameFor(o, games) || {}).state === "in")));
       if (key !== lastPickKey) { lastPickKey = key; renderPickCard(pick, official); }
       countUp($("s-games"), games.length, (v) => String(Math.round(v)), 900);
       renderFilters(games);
@@ -703,7 +729,12 @@
     feed = await loadFeed();
     renderRecord(feed);
     await refresh();
-    setInterval(() => { if (!document.hidden) refresh(); }, 60000);
+    // Every minute; every 20 seconds while a game with a bet on it is live.
+    const tick = async () => {
+      if (!document.hidden) await refresh();
+      setTimeout(tick, liveBet ? 20000 : 60000);
+    };
+    setTimeout(tick, liveBet ? 20000 : 60000);
     let hiddenAt = 0;  // catch up straight away when a background tab comes back
     document.addEventListener("visibilitychange", () => {
       if (document.hidden) hiddenAt = Date.now();
