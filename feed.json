@@ -66,11 +66,11 @@
    "color": "#000000"
   }
  },
- "generated_at": "2026-11-28T01:43:54+00:00",
+ "generated_at": "2026-11-28T01:45:40+00:00",
  "mode": "live",
  "betting_live": true,
  "venue": "predictfun",
- "claims_live": true,
+ "claims_live": false,
  "today": {
   "date": "2026-11-27",
   "sport": "La Liga",
@@ -311,7 +311,7 @@
  },
  "airdrop": {
   "share": 0.5,
-  "live": true,
+  "live": false,
   "owed_usd": 0.0
  },
  "airdrops": [],
